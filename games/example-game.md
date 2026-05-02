@@ -113,7 +113,7 @@ A short facts section helps recruiters and collaborators understand the project 
 
 Add a single image with regular Markdown image syntax:
 
-![Example gameplay screenshot](assets/hero/side-visual.jpg)
+![Example gameplay screenshot](assets/games/example-game/sample-2.jpg)
 
 Use descriptive alt text. It helps accessibility and makes the Markdown easier to maintain.
 
