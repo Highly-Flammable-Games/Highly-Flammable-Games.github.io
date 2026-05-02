@@ -1,0 +1,2390 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="scroll-smooth" style="background-color: #000000; color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Kacper Malek | Game Developer</title>
+    <link rel="icon" type="image/png" href="assets/avatar-favicon.png">
+    <link rel="shortcut icon" type="image/png" href="assets/avatar-favicon.png">
+    <style>
+        html,
+        body {
+            background-color: #000000;
+        }
+
+        .social-icon-mask {
+            flex-shrink: 0;
+            background-color: currentColor;
+            -webkit-mask-position: center;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size: contain;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            mask-size: contain;
+        }
+
+        .social-icon-mask--linkedin {
+            -webkit-mask-image: url('assets/logos/linkedin.svg');
+            mask-image: url('assets/logos/linkedin.svg');
+        }
+
+        .social-icon-mask--github {
+            -webkit-mask-image: url('assets/logos/github.svg');
+            mask-image: url('assets/logos/github.svg');
+        }
+
+        .social-icon-mask--itch-io {
+            -webkit-mask-image: url('assets/logos/itch-io.svg');
+            mask-image: url('assets/logos/itch-io.svg');
+        }
+
+        body {
+            opacity: 1;
+            transition: opacity 160ms ease;
+        }
+
+        body.is-page-exiting {
+            opacity: 0;
+        }
+    </style>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#000000',
+                            800: '#0a0a0a',
+                            700: '#111111',
+                            600: '#1a1a1a',
+                        },
+                        accent: {
+                            500: '#ffffff', // Pure white
+                            400: '#a3a3a3', // Light gray
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Markdown Rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+
+    <style>
+        /* Custom Styles for minimal scrollbar and animations */
+        html,
+        body {
+            background-color: #000000;
+            color: #e5e5e5;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        section {
+            max-width: 100%;
+        }
+
+        /* Subtle Grid Background */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Scroll Reveal Utility Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        .nav-fancy-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-fancy-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-fancy-link:hover::after,
+        .nav-fancy-link:focus-visible::after {
+            transform: scaleX(1);
+            transform-origin: center;
+        }
+
+        .underline-accent-link {
+            position: relative;
+            display: inline-flex;
+        }
+
+        .underline-accent-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .underline-accent-link:hover::after,
+        .underline-accent-link:focus-visible::after {
+            transform: scaleX(1);
+        }
+
+        .markdown-body h1,
+        .markdown-body h2,
+        .markdown-body h3 {
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+        }
+
+        .markdown-body h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .markdown-body h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .markdown-body p {
+            color: #a3a3a3;
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+
+        .markdown-body a {
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .markdown-body a:hover,
+        .markdown-body a:focus-visible {
+            border-color: rgba(255, 255, 255, 0.8);
+            color: #e5e5e5;
+        }
+
+        .markdown-body ul,
+        .markdown-body ol {
+            color: #a3a3a3;
+            line-height: 1.8;
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+
+        .markdown-body ul {
+            list-style: disc;
+        }
+
+        .markdown-body ol {
+            list-style: decimal;
+        }
+
+        .markdown-body li {
+            padding-left: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body blockquote {
+            border-left: 2px solid rgba(255, 255, 255, 0.25);
+            color: #d4d4d4;
+            margin: 2rem 0;
+            padding-left: 1.25rem;
+        }
+
+        .markdown-body img {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            cursor: zoom-in;
+            margin: 2rem 0;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .markdown-body code {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.375rem;
+            color: #ffffff;
+            font-size: 0.9em;
+            padding: 0.15rem 0.35rem;
+        }
+
+        .markdown-body pre {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+            padding: 1.25rem;
+        }
+
+        .markdown-body pre code {
+            background: transparent;
+            border: 0;
+            padding: 0;
+        }
+
+        .gallery-thumbnail[aria-current="true"] {
+            border-color: rgba(255, 255, 255, 0.8);
+            opacity: 1;
+        }
+
+        .markdown-carousel {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .markdown-carousel-frame {
+            isolation: isolate;
+            overflow: hidden;
+            position: relative;
+            touch-action: pan-y;
+        }
+
+        .markdown-body .markdown-carousel-image,
+        .markdown-body .markdown-carousel-video {
+            aspect-ratio: 16 / 9;
+            border: 0;
+            border-radius: 0;
+            display: block;
+            margin: 0;
+            background: #000000;
+            object-fit: contain;
+            opacity: 0.85;
+            user-select: none;
+            -webkit-user-drag: none;
+            width: 100%;
+        }
+
+        .markdown-carousel-media.hidden {
+            display: none;
+        }
+
+        .markdown-carousel-preview-image,
+        .markdown-carousel-preview-video,
+        .gallery-swipe-preview {
+            inset: 0;
+            pointer-events: none;
+            position: absolute;
+        }
+
+        .markdown-carousel-preview-image,
+        .markdown-carousel-preview-video {
+            z-index: 1;
+        }
+
+        .markdown-carousel-preview-image.hidden,
+        .markdown-carousel-preview-video.hidden {
+            display: none;
+        }
+
+        .markdown-carousel-button {
+            z-index: 3;
+        }
+
+        .swipe-animating {
+            transition: transform 220ms ease;
+        }
+
+        .markdown-carousel-button {
+            align-items: center;
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            color: #ffffff;
+            display: flex;
+            height: 2.75rem;
+            justify-content: center;
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: background 0.2s ease, border-color 0.2s ease;
+            width: 2.75rem;
+        }
+
+        .markdown-carousel-button:hover,
+        .markdown-carousel-button:focus-visible {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.35);
+            outline: none;
+        }
+
+        .markdown-carousel-prev {
+            left: 1rem;
+        }
+
+        .markdown-carousel-next {
+            right: 1rem;
+        }
+
+        .markdown-carousel-dots {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .markdown-carousel-dot {
+            appearance: none;
+            background: rgba(255, 255, 255, 0.28);
+            border: 0;
+            border-radius: 999px;
+            cursor: pointer;
+            display: block;
+            flex: 0 0 auto;
+            font-size: 0;
+            height: 0.65rem;
+            line-height: 0;
+            padding: 0;
+            transition: background 0.2s ease, transform 0.2s ease;
+            width: 0.65rem;
+        }
+
+        .markdown-carousel-dot:hover,
+        .markdown-carousel-dot:focus-visible,
+        .markdown-carousel-dot[aria-current="true"] {
+            background: #ffffff;
+            outline: none;
+            transform: scale(1.15);
+        }
+
+        .markdown-video-embed {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .markdown-body .markdown-video-embed-video {
+            aspect-ratio: 16 / 9;
+            background: #000000;
+            border: 0;
+            border-radius: 0;
+            display: block;
+            margin: 0;
+            object-fit: contain;
+            opacity: 0.95;
+            width: 100%;
+        }
+
+        .markdown-body .markdown-carousel-main-video {
+            aspect-ratio: 16 / 9;
+            border: 0;
+            border-radius: 0;
+            display: block;
+            margin: 0;
+            background: #000000;
+            object-fit: contain;
+            opacity: 0.92;
+            user-select: none;
+            width: 100%;
+        }
+
+        .markdown-body .markdown-carousel-preview-video {
+            object-fit: contain;
+            background: #000000;
+            opacity: 0.92;
+            pointer-events: none;
+        }
+
+        .markdown-body h2,
+        .markdown-body h3 {
+            scroll-margin-top: 7rem;
+        }
+
+        .game-page-toc-button {
+            display: block;
+            position: relative;
+            text-align: left;
+            transition: color 0.2s ease;
+            width: 100%;
+        }
+
+        .game-page-toc-button::before {
+            background: currentColor;
+            content: '';
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+            width: 1px;
+        }
+
+        .game-page-toc-button:hover::before,
+        .game-page-toc-button:focus-visible::before {
+            transform: scaleY(1);
+        }
+
+        #gallery-fullscreen-trigger {
+            touch-action: pan-y;
+        }
+
+        @media (min-width: 1280px) {
+            #game-page-toc.is-floating #game-page-toc-panel {
+                left: var(--game-page-toc-left);
+                position: fixed;
+                top: 7rem;
+                width: var(--game-page-toc-width);
+                z-index: 30;
+            }
+
+            #game-page-toc-panel {
+                max-height: calc(100vh - 8rem);
+                overflow-y: auto;
+            }
+        }
+
+        #fullscreen-gallery {
+            caret-color: transparent;
+            user-select: none;
+        }
+
+        .route-transition-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 220ms ease;
+        }
+
+        .route-transition-overlay.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .route-transition-loader {
+            opacity: 0;
+            transition: opacity 120ms ease;
+        }
+
+        .route-transition-loader.is-visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden selection:bg-white selection:text-black" style="background-color: #000000;">
+
+    <!-- Fixed Background Elements -->
+    <div class="fixed inset-0 z-[-1] bg-grid pointer-events-none"></div>
+    <div class="fixed top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-accent-500/10 blur-[120px] pointer-events-none z-[-1]"></div>
+    <div class="fixed bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-white/5 blur-[150px] pointer-events-none z-[-1]"></div>
+
+    <div id="route-transition-overlay" class="route-transition-overlay fixed inset-0 z-[90] flex items-center justify-center bg-black">
+        <div id="route-transition-loader" class="route-transition-loader h-px w-24 overflow-hidden rounded-full bg-white/10">
+            <div class="h-full w-1/2 animate-pulse rounded-full bg-white/70"></div>
+        </div>
+    </div>
+
+    <!-- Bottom Screen Fade Overlay -->
+    <div class="fixed bottom-0 left-0 w-full h-16 pointer-events-none z-40" style="background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.1) 80%, rgba(0,0,0,0) 100%);"></div>
+
+    <!-- Back To Top -->
+    <button id="back-to-top" type="button" aria-label="Back to top" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 w-12 h-12 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white shadow-2xl flex items-center justify-center opacity-0 pointer-events-none translate-y-4 transition-all duration-300 hover:bg-white/10 hover:border-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Navigation -->
+    <header class="fixed top-0 w-full z-50" id="navbar">
+        <!-- Fading Glass Background -->
+        <div id="navbar-bg" class="absolute top-0 left-0 w-full h-[120px] bg-black/50 backdrop-blur-md pointer-events-none transition-colors duration-300" style="-webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0) 100%);"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between relative z-10">
+            <a href="#/" class="font-heading font-bold text-xl tracking-tighter text-white flex items-center gap-2">
+                <img src="assets/avatar-favicon.png" alt="" class="w-6 h-6 rounded-lg object-cover">
+                KM.DEV
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400">
+                <a href="#/" class="nav-fancy-link hover:text-white transition-colors">Home</a>
+                <a href="#work" class="nav-fancy-link hover:text-white transition-colors">Work</a>
+                <a href="#skills" class="nav-fancy-link hover:text-white transition-colors">Skills</a>
+                <a href="#about" class="nav-fancy-link hover:text-white transition-colors">About</a>
+                <a href="#blog" class="nav-fancy-link hover:text-white transition-colors">Blog</a>
+                <a href="#contact" class="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all">Let's Talk</a>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-neutral-400 hover:text-white relative z-10">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div id="mobile-nav" class="md:hidden absolute top-20 left-0 w-full overflow-hidden bg-black/90 backdrop-blur-md flex-col items-center py-8 gap-6 hidden shadow-2xl z-10">
+            <div class="absolute top-1/2 left-1/2 w-[360px] h-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.025] blur-[100px] pointer-events-none"></div>
+            <a href="#/" class="mobile-link relative z-10 text-neutral-300 hover:text-white font-medium">Home</a>
+            <a href="#work" class="mobile-link relative z-10 text-neutral-300 hover:text-white font-medium">Work</a>
+            <a href="#skills" class="mobile-link relative z-10 text-neutral-300 hover:text-white font-medium">Skills</a>
+            <a href="#about" class="mobile-link relative z-10 text-neutral-300 hover:text-white font-medium">About</a>
+            <a href="#blog" class="mobile-link relative z-10 text-neutral-300 hover:text-white font-medium">Blog</a>
+            <a href="#contact" class="mobile-link relative z-10 px-6 py-2 rounded-full bg-white text-black font-medium mt-2">Let's Talk</a>
+        </div>
+    </header>
+
+    <main id="home-view" data-route-view>
+        <!-- Hero Section -->
+        <section id="home" class="relative min-h-screen flex items-center pt-20 pb-24 md:pb-0 overflow-hidden">
+            <!-- Hero Background Carousel -->
+            <div id="hero-bg-carousel" class="absolute inset-0 z-0 pointer-events-none" style="-webkit-mask-image: linear-gradient(to bottom, black 0%, black 58%, rgba(0,0,0,0.75) 74%, transparent 100%); mask-image: linear-gradient(to bottom, black 0%, black 58%, rgba(0,0,0,0.75) 74%, transparent 100%);">
+                <img src="assets/hero/carousel-1.jpg" alt="Neon Protocol" class="bg-carousel-img absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity grayscale transition-opacity duration-1000 ease-in-out">
+                <img src="assets/hero/carousel-2.jpg" alt="Echoes of Void" class="bg-carousel-img absolute inset-0 w-full h-full object-cover opacity-0 mix-blend-luminosity grayscale transition-opacity duration-1000 ease-in-out">
+                <img src="assets/hero/carousel-3.jpg" alt="Gridlock Tactics" class="bg-carousel-img absolute inset-0 w-full h-full object-cover opacity-0 mix-blend-luminosity grayscale transition-opacity duration-1000 ease-in-out">
+                <img src="assets/hero/carousel-4.jpg" alt="Voxel Forge" class="bg-carousel-img absolute inset-0 w-full h-full object-cover opacity-0 mix-blend-luminosity grayscale transition-opacity duration-1000 ease-in-out">
+                <!-- Fade out gradient into the rest of the site -->
+                <div class="absolute inset-0 bg-gradient-to-b from-dark-900/35 via-dark-900/55 to-dark-900/25"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full flex flex-col md:flex-row items-center gap-12 lg:gap-24 relative z-10">
+                <div class="flex-1 min-w-0 space-y-8 reveal pt-12 md:pt-0">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-accent-400">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        Available for new projects
+                    </div>
+                    
+                    <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tighter text-white leading-[1.1]">
+                        Crafting <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-neutral-600">Digital</span><br class="sm:hidden"> Worlds.
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-neutral-400 max-w-xl leading-relaxed">
+                        I'm Kacper, a Gameplay Programmer and Technical Artist specializing in Unity & Unreal Engine. I build immersive, performant, and mechanically rich experiences.
+                    </p>
+                    
+                    <div class="flex items-center gap-4 pt-4">
+                        <a href="#work" class="px-8 py-4 rounded-full bg-white text-dark-900 font-semibold hover:bg-neutral-200 transition-colors flex items-center gap-2">
+                            View Portfolio <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/kacper-k-malek/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" class="w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors flex items-center justify-center">
+                            <span class="social-icon-mask social-icon-mask--linkedin w-8 h-8" aria-hidden="true"></span>
+                        </a>
+                        <a href="https://github.com/vos6434" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" class="w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors flex items-center justify-center">
+                            <span class="social-icon-mask social-icon-mask--github w-12 h-12" aria-hidden="true"></span>
+                        </a>
+                    </div>
+
+                    <a href="#work" aria-label="Scroll to selected work section" class="md:hidden flex w-fit mx-auto flex-col items-center gap-2 pt-2 opacity-50 hover:opacity-100 focus:opacity-100 transition-opacity cursor-pointer">
+                        <span class="text-xs uppercase tracking-widest font-medium">Scroll</span>
+                        <i data-lucide="arrow-down" class="w-4 h-4 animate-bounce"></i>
+                    </a>
+                </div>
+
+                <div class="flex-1 w-full max-w-md md:max-w-none relative reveal delay-200">
+                    <!-- Abstract Hero Visual representing game dev -->
+                    <div class="relative w-full aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 bg-dark-800 animate-float">
+                        <img src="assets/hero/side-visual.jpg" alt="Game Engine Render" class="w-full h-full object-cover opacity-60 mix-blend-luminosity grayscale">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent"></div>
+                        
+                        <!-- Floating Tech Tags -->
+                        <div class="absolute bottom-6 left-6 right-6 flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-md bg-dark-900/80 backdrop-blur border border-white/10 text-xs font-mono text-white">C#</span>
+                            <span class="px-3 py-1 rounded-md bg-dark-900/80 backdrop-blur border border-white/10 text-xs font-mono text-white">Git</span>
+                            <span class="px-3 py-1 rounded-md bg-dark-900/80 backdrop-blur border border-white/10 text-xs font-mono text-white">Unity Engine</span>
+                            <span class="px-3 py-1 rounded-md bg-dark-900/80 backdrop-blur border border-white/10 text-xs font-mono text-white">Source 2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <a href="#work" aria-label="Scroll to selected work section" class="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-50 hover:opacity-100 focus:opacity-100 transition-opacity z-20 cursor-pointer">
+                <span class="text-xs uppercase tracking-widest font-medium">Scroll</span>
+                <i data-lucide="arrow-down" class="w-4 h-4 animate-bounce"></i>
+            </a>
+        </section>
+
+        <!-- Selected Work Section -->
+        <section id="work" class="py-24 md:py-32 relative">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                <div class="mb-16 md:mb-24 flex min-w-0 flex-col md:flex-row md:items-end justify-between gap-6 reveal">
+                    <div class="min-w-0">
+                        <h2 class="font-heading text-3xl md:text-5xl font-bold text-white mb-4">Selected Works</h2>
+                        <p class="text-neutral-400 max-w-md">A showcase of commercial releases, game jams, and personal technical prototypes.</p>
+                    </div>
+                    <a href="https://geegeestudios.itch.io/" target="_blank" rel="noopener noreferrer" class="underline-accent-link inline-flex w-fit items-center gap-2 text-neutral-400 hover:text-white transition-colors font-medium border-b border-white/20 pb-1">
+                        <span class="social-icon-mask social-icon-mask--itch-io w-4 h-4 shrink-0" aria-hidden="true"></span>
+                        View Itch.io Profile <i data-lucide="external-link" class="w-4 h-4 shrink-0"></i>
+                    </a>
+                </div>
+
+                <div id="selected-works-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                    <p class="text-neutral-500 text-sm">Loading selected works...</p>
+                </div>
+
+                <div id="selected-works-more" class="hidden mt-14 text-center">
+                    <a href="#/works" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-dark-900 font-semibold hover:bg-neutral-200 transition-colors">
+                        See More Projects
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 relative">
+            <div class="absolute top-1/2 left-1/2 w-[520px] h-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.025] blur-[120px] pointer-events-none"></div>
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-16 text-center reveal">Technical Arsenal</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <!-- Column 1 -->
+                    <div class="reveal">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 rounded bg-white/5 border border-white/10">
+                                <i data-lucide="code-2" class="w-5 h-5 text-accent-400"></i>
+                            </div>
+                            <h3 class="font-heading text-xl font-semibold text-white">Languages</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex flex-col gap-1">
+                                <div class="flex justify-between text-sm"><span class="text-neutral-300">C#</span> <span class="text-neutral-500">Advanced</span></div>
+                                <div class="h-1 w-full bg-dark-700 rounded-full overflow-hidden"><div class="h-full bg-accent-500 w-[85%]"></div></div>
+                            </li>
+                            <li class="flex flex-col gap-1">
+                                <div class="flex justify-between text-sm"><span class="text-neutral-300">C++</span> <span class="text-neutral-500">Intermediate</span></div>
+                                <div class="h-1 w-full bg-dark-700 rounded-full overflow-hidden"><div class="h-full bg-accent-500 w-[60%]"></div></div>
+                            </li>
+                            <li class="flex flex-col gap-1">
+                                <div class="flex justify-between text-sm"><span class="text-neutral-300">Python</span> <span class="text-neutral-500">Intermediate</span></div>
+                                <div class="h-1 w-full bg-dark-700 rounded-full overflow-hidden"><div class="h-full bg-accent-500 w-[60%]"></div></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="reveal delay-100">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 rounded bg-white/5 border border-white/10">
+                                <i data-lucide="cpu" class="w-5 h-5 text-accent-400"></i>
+                            </div>
+                            <h3 class="font-heading text-xl font-semibold text-white">Engines & Tools</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-4 py-2 rounded-lg bg-dark-800 border border-white/10 text-neutral-300 text-sm flex items-center gap-2 hover:border-accent-500/50 transition-colors">
+                                Unity Engine
+                            </span>
+                            <span class="px-4 py-2 rounded-lg bg-dark-800 border border-white/10 text-neutral-300 text-sm flex items-center gap-2 hover:border-accent-500/50 transition-colors">
+                                Source 2
+                            </span>
+                            <span class="px-4 py-2 rounded-lg bg-dark-800 border border-white/10 text-neutral-300 text-sm flex items-center gap-2 hover:border-accent-500/50 transition-colors">
+                                Git
+                            </span>
+                            <span class="px-4 py-2 rounded-lg bg-dark-800 border border-white/10 text-neutral-300 text-sm flex items-center gap-2 hover:border-accent-500/50 transition-colors">
+                                Autodesk Maya
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="reveal delay-200">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 rounded bg-white/5 border border-white/10">
+                                <i data-lucide="zap" class="w-5 h-5 text-accent-400"></i>
+                            </div>
+                            <h3 class="font-heading text-xl font-semibold text-white">Specialties</h3>
+                        </div>
+                        <ul class="space-y-4 text-neutral-400 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-white mt-0.5 shrink-0"></i>
+                                <span>AI Behaviour Trees & State Machines</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-white mt-0.5 shrink-0"></i>
+                                <span>Player Controllers</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-white mt-0.5 shrink-0"></i>
+                                <span>Procedural Generation</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-white mt-0.5 shrink-0"></i>
+                                <span>Creating bugs</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-white mt-0.5 shrink-0"></i>
+                                <span>Fixing bugs</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About / Experience Section -->
+        <section id="about" class="py-24 md:py-32 relative">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div class="reveal">
+                        <h2 class="font-heading text-3xl md:text-5xl font-bold text-white mb-6">About Me</h2>
+                        <div class="space-y-4 text-neutral-400 text-lg leading-relaxed">
+                            <p>
+                                I'm a programmer driven by the intersection of tight gameplay mechanics and striking visual aesthetics. With over 5 years of experience in the games industry, I've had the pleasure of bringing both indie gems and AA titles to life.
+                            </p>
+                            <p>
+                                My philosophy is simple: write clean code, build scalable systems, and never lose sight of the player's experience. When I'm not debugging a tricky physics interaction, you can find me analyzing mechanics in classic retro games or exploring algorithmic art.
+                            </p>
+                        </div>
+                        
+                        <div class="mt-10 p-6 rounded-2xl bg-dark-800 border border-white/5 flex gap-6 items-center">
+                            <div class="w-16 h-16 rounded-full bg-dark-700 overflow-hidden shrink-0 border border-white/10">
+                                <img src="assets/avatar-favicon.png" alt="Kacper Malek profile picture" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium mb-1">Kacper Malek</h4>
+                                <p class="text-sm text-neutral-500">Based in Hertfordshire, UK. <br> Open for developer roles.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal delay-100">
+                        <h3 class="font-heading text-2xl font-bold text-white mb-8">Experience</h3>
+                        
+                        <!-- Timeline -->
+                        <div class="space-y-8 border-l border-white/10 ml-3 pl-8 relative">
+                            <!-- Timeline Dot -->
+                            
+                            <div class="relative">
+                                <div class="absolute -left-[39px] top-1 w-3 h-3 rounded-full bg-accent-500 ring-4 ring-dark-900"></div>
+                                <span class="text-sm font-mono text-accent-400 mb-1 block">2025 - Present</span>
+                                <h4 class="text-lg font-bold text-white mb-1">IT Technician</h4>
+                                <span class="text-sm text-neutral-500 block mb-3">Queens School</span>
+                                <p class="text-neutral-400 text-sm">Working as an IT Technician at Queens School.</p>
+                            </div>
+
+                            <div class="relative">
+                                <div class="absolute -left-[39px] top-1 w-3 h-3 rounded-full bg-dark-600 border border-white/20 ring-4 ring-dark-900"></div>
+                                <span class="text-sm font-mono text-neutral-500 mb-1 block">2022 - 2025</span>
+                                <h4 class="text-lg font-bold text-white mb-1">Computer Games Development Student</h4>
+                                <span class="text-sm text-neutral-500 block mb-3">University of Bedfordshire</span>
+                                <p class="text-neutral-400 text-sm">Studied Computer Games Development at the University of Bedfordshire.</p>
+                            </div>
+
+                            <div class="relative">
+                                <div class="absolute -left-[39px] top-1 w-3 h-3 rounded-full bg-dark-600 border border-white/20 ring-4 ring-dark-900"></div>
+                                <span class="text-sm font-mono text-neutral-500 mb-1 block">2020 - 2022</span>
+                                <h4 class="text-lg font-bold text-white mb-1">Software and Games Development Student</h4>
+                                <span class="text-sm text-neutral-500 block mb-3">West Herts College</span>
+                                <p class="text-neutral-400 text-sm">Studied Software and Games Development at West Herts College.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-32 relative overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 w-[420px] h-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.03] blur-[120px] pointer-events-none"></div>
+            
+            <div class="max-w-4xl mx-auto px-6 lg:px-12 text-center relative z-10 reveal">
+                <i data-lucide="mail" class="w-12 h-12 text-accent-400 mx-auto mb-6"></i>
+                <h2 class="font-heading text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">Let's build something <br> extraordinary.</h2>
+                <p class="text-neutral-400 text-lg mb-10 max-w-xl mx-auto">
+                    Currently looking for new opportunities. Whether you have a question, a project proposal, or just want to talk about game design, my inbox is open.
+                </p>
+                
+                <a href="mailto:kacpermalek6434@gmail.com" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-dark-900 font-bold hover:scale-105 transition-transform duration-300">
+                    Say Hello <i data-lucide="send" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <main id="works-view" data-route-view class="hidden min-h-screen pt-32 pb-24">
+        <section class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 md:mb-24 reveal">
+                <p class="text-sm uppercase tracking-[0.3em] text-neutral-500 mb-4">Archive</p>
+                <h1 class="font-heading text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6">Selected Works</h1>
+                <p class="text-neutral-400 max-w-2xl mx-auto text-lg leading-relaxed">A fuller archive of commercial releases, game jams, tools, and technical prototypes.</p>
+            </div>
+
+            <div id="all-works-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <p class="text-neutral-500 text-sm">Loading projects...</p>
+            </div>
+        </section>
+    </main>
+
+    <main id="game-view" data-route-view class="hidden min-h-screen pt-32 pb-24">
+        <article class="max-w-7xl mx-auto px-6 lg:px-12">
+            <section id="loading-state" class="rounded-3xl border border-white/10 bg-white/[0.02] p-8 md:p-12">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-accent-400 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                    Loading project
+                </div>
+                <h1 class="font-heading text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4">Loading Game Page</h1>
+                <p class="text-neutral-400 max-w-2xl">Fetching the markdown case study for this project.</p>
+            </section>
+
+            <section id="error-state" class="hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 md:p-12">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-accent-400 mb-6">
+                    <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                    Not found
+                </div>
+                <h1 class="font-heading text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4">Game Page Not Found</h1>
+                <p id="error-message" class="text-neutral-400 max-w-2xl mb-8">This project page could not be loaded.</p>
+                <a href="#/works" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-dark-900 font-semibold hover:bg-neutral-200 transition-colors">
+                    Back to Selected Works
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </section>
+
+            <section id="game-page" class="hidden">
+                <a id="game-back-link" href="#/works" class="mb-10 inline-flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    Back
+                </a>
+
+                <div class="text-center mb-10 md:mb-14">
+                    <h1 id="page-title" class="font-heading text-5xl md:text-7xl font-bold tracking-tighter text-white mb-5"></h1>
+                    <div id="page-meta" class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-neutral-400 mb-5"></div>
+                    <div id="meta-tags" class="flex flex-wrap justify-center gap-2"></div>
+                </div>
+
+                <div id="gallery" class="hidden mb-12 md:mb-16">
+                    <div class="group/gallery relative overflow-hidden rounded-3xl border border-white/10 bg-dark-800 shadow-2xl">
+                        <button id="gallery-fullscreen-trigger" type="button" class="block w-full select-none focus:outline-none focus:ring-2 focus:ring-white/30" aria-label="Open gallery image fullscreen">
+                            <img id="gallery-main-image" src="" alt="" draggable="false" class="w-full aspect-video object-contain bg-black opacity-80 transition-opacity duration-300 select-none">
+                        </button>
+                        <video id="gallery-main-video" class="hidden w-full aspect-video object-contain bg-black opacity-90" controls preload="metadata"></video>
+                        <div id="gallery-swipe-preview" class="gallery-swipe-preview hidden"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/50 via-transparent to-dark-900/20 pointer-events-none"></div>
+                        <button id="gallery-prev" type="button" aria-label="Previous gallery image" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-white flex items-center justify-center opacity-0 pointer-events-none group-hover/gallery:opacity-100 group-hover/gallery:pointer-events-auto focus:opacity-100 focus:pointer-events-auto hover:bg-white/10 hover:border-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 transition-colors">
+                            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                        </button>
+                        <button id="gallery-next" type="button" aria-label="Next gallery image" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-white flex items-center justify-center opacity-0 pointer-events-none group-hover/gallery:opacity-100 group-hover/gallery:pointer-events-auto focus:opacity-100 focus:pointer-events-auto hover:bg-white/10 hover:border-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 transition-colors">
+                            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                    <div id="gallery-thumbnails" class="mt-3 flex gap-3 overflow-x-auto pb-2 cursor-grab select-none active:cursor-grabbing"></div>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-[12rem_minmax(0,48rem)_12rem] gap-10 xl:gap-12">
+                    <aside id="game-page-toc" class="hidden xl:block">
+                        <div id="game-page-toc-panel" class="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+                            <p class="mb-4 text-xs uppercase tracking-[0.25em] text-neutral-500">On this page</p>
+                            <nav id="game-page-toc-list" class="space-y-2"></nav>
+                        </div>
+                    </aside>
+
+                    <div id="markdown-content" class="markdown-body max-w-3xl xl:max-w-none"></div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 bg-dark-900/50 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="font-heading font-bold text-xl tracking-tighter text-white flex items-center gap-2">
+                <img src="assets/avatar-favicon.png" alt="" class="w-5 h-5 rounded-lg object-cover">
+                KM.DEV
+            </div>
+            
+            <p class="text-neutral-500 text-sm">© <span id="year"></span> Kacper Malek. All rights reserved.</p>
+            
+            <div class="flex items-center gap-2 sm:gap-4 text-neutral-500">
+                <a href="https://www.linkedin.com/in/kacper-k-malek/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors p-2" aria-label="LinkedIn profile">
+                    <span class="social-icon-mask social-icon-mask--linkedin block w-5 h-5" aria-hidden="true"></span>
+                </a>
+                <a href="https://github.com/vos6434" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors p-2" aria-label="GitHub profile">
+                    <span class="social-icon-mask social-icon-mask--github block w-5 h-5" aria-hidden="true"></span>
+                </a>
+                <a href="https://geegeestudios.itch.io/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors p-2" aria-label="Itch.io profile">
+                    <span class="social-icon-mask social-icon-mask--itch-io block w-5 h-5" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="fullscreen-gallery" class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-sm p-4 md:p-8">
+        <button id="fullscreen-close" type="button" aria-label="Close fullscreen image" class="absolute top-5 right-5 z-10 w-12 h-12 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 transition-colors">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <img id="fullscreen-image" src="" alt="" draggable="false" class="w-full h-full object-contain pointer-events-none select-none">
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function initializePageTransitions() {
+            document.addEventListener('click', (event) => {
+                const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+
+                if (
+                    !link ||
+                    event.defaultPrevented ||
+                    event.button !== 0 ||
+                    event.metaKey ||
+                    event.ctrlKey ||
+                    event.shiftKey ||
+                    event.altKey ||
+                    link.target ||
+                    link.hasAttribute('download')
+                ) {
+                    return;
+                }
+
+                const url = new URL(link.href, window.location.href);
+                const isSamePageHash = url.pathname === window.location.pathname &&
+                    url.search === window.location.search &&
+                    url.hash;
+
+                if (url.origin !== window.location.origin || isSamePageHash) {
+                    return;
+                }
+
+                event.preventDefault();
+                document.body.classList.add('is-page-exiting');
+                window.setTimeout(() => {
+                    window.location.href = url.href;
+                }, 160);
+            });
+        }
+
+        initializePageTransitions();
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Update Copyright Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileNav = document.getElementById('mobile-nav');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if(isMenuOpen) {
+                mobileNav.classList.remove('hidden');
+                mobileNav.classList.add('flex');
+                menuBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+            } else {
+                mobileNav.classList.add('hidden');
+                mobileNav.classList.remove('flex');
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+            }
+            lucide.createIcons();
+        });
+
+        // Close mobile menu on link click
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.add('hidden');
+                mobileNav.classList.remove('flex');
+                isMenuOpen = false;
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+                lucide.createIcons();
+            });
+        });
+
+        // Navbar background on scroll
+        const navbarBg = document.getElementById('navbar-bg');
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbarBg.classList.add('bg-black/90');
+                navbarBg.classList.remove('bg-black/50');
+            } else {
+                navbarBg.classList.remove('bg-black/90');
+                navbarBg.classList.add('bg-black/50');
+            }
+
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+            }
+
+            updateGamePageTocPosition();
+        });
+
+        backToTopBtn.addEventListener('click', (event) => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            event.currentTarget.blur();
+        });
+
+        // Selected Works rendered from games.json
+        const homeView = document.getElementById('home-view');
+        const worksView = document.getElementById('works-view');
+        const gameView = document.getElementById('game-view');
+        const routeViews = [homeView, worksView, gameView];
+        const selectedWorksGrid = document.getElementById('selected-works-grid');
+        const allWorksGrid = document.getElementById('all-works-grid');
+        const loadingState = document.getElementById('loading-state');
+        const errorState = document.getElementById('error-state');
+        const errorMessage = document.getElementById('error-message');
+        const gamePage = document.getElementById('game-page');
+        const gameBackLink = document.getElementById('game-back-link');
+        const markdownContent = document.getElementById('markdown-content');
+        const gamePageToc = document.getElementById('game-page-toc');
+        const gamePageTocList = document.getElementById('game-page-toc-list');
+        const pageTitle = document.getElementById('page-title');
+        const pageMeta = document.getElementById('page-meta');
+        const metaTags = document.getElementById('meta-tags');
+        const gallery = document.getElementById('gallery');
+        const galleryMainImage = document.getElementById('gallery-main-image');
+        const galleryMainVideo = document.getElementById('gallery-main-video');
+        const galleryFullscreenTrigger = document.getElementById('gallery-fullscreen-trigger');
+        const gallerySwipePreview = document.getElementById('gallery-swipe-preview');
+        const galleryThumbnails = document.getElementById('gallery-thumbnails');
+        const galleryPrev = document.getElementById('gallery-prev');
+        const galleryNext = document.getElementById('gallery-next');
+        const fullscreenGallery = document.getElementById('fullscreen-gallery');
+        const fullscreenImage = document.getElementById('fullscreen-image');
+        const fullscreenClose = document.getElementById('fullscreen-close');
+        const routeTransitionOverlay = document.getElementById('route-transition-overlay');
+        const routeTransitionLoader = document.getElementById('route-transition-loader');
+        const gameReturnRouteStorageKey = 'portfolioGameReturnRoute';
+        const allowedSlugPattern = /^[a-z0-9-]+$/;
+        let allGamesPromise;
+        let allWorksRendered = false;
+        let activeGameSlug = '';
+        let hasRenderedRoute = false;
+        let routeTransitionId = 0;
+        let isThumbnailDragging = false;
+        let thumbnailDragStartX = 0;
+        let thumbnailDragStartScrollLeft = 0;
+        let suppressThumbnailClick = false;
+        let thumbnailPointerId = null;
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function getCurrentGameReturnRoute() {
+            const hash = window.location.hash;
+
+            if (!hash || hash === '#/') {
+                return '#/';
+            }
+
+            if (hash.startsWith('#/game/')) {
+                return sessionStorage.getItem(gameReturnRouteStorageKey) || '#/works';
+            }
+
+            return hash;
+        }
+
+        function rememberGameReturnRoute() {
+            sessionStorage.setItem(gameReturnRouteStorageKey, getCurrentGameReturnRoute());
+        }
+
+        document.addEventListener('click', (event) => {
+            const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+
+            if (!link) {
+                return;
+            }
+
+            const url = new URL(link.href, window.location.href);
+
+            if (
+                url.origin === window.location.origin &&
+                url.pathname === window.location.pathname &&
+                url.search === window.location.search &&
+                url.hash.startsWith('#/game/')
+            ) {
+                rememberGameReturnRoute();
+            }
+        });
+
+        gameBackLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            window.location.hash = sessionStorage.getItem(gameReturnRouteStorageKey) || '#/works';
+            event.currentTarget.blur();
+        });
+
+        function parseMarkdownMetadata(source) {
+            const frontMatterMatch = source.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+            const metadata = {};
+
+            if (!frontMatterMatch) {
+                return metadata;
+            }
+
+            frontMatterMatch[1].split('\n').forEach((line) => {
+                const separatorIndex = line.indexOf(':');
+
+                if (separatorIndex === -1) {
+                    return;
+                }
+
+                const key = line.slice(0, separatorIndex).trim();
+                const value = line.slice(separatorIndex + 1).trim();
+                metadata[key] = value;
+            });
+
+            return metadata;
+        }
+
+        function isVideoUrl(url) {
+            try {
+                return /\.(mp4|webm|ogg)$/i.test(new URL(url, window.location.href).pathname);
+            } catch (error) {
+                return /\.(mp4|webm|ogg)$/i.test(url);
+            }
+        }
+
+        function getCardImagesFromMetadata(metadata, fallbackCover) {
+            const media = [];
+
+            if (metadata.cover) {
+                media.push(metadata.cover);
+            }
+
+            if (metadata.gallery) {
+                media.push(...metadata.gallery.split(',').map((item) => item.trim()).filter(Boolean));
+            }
+
+            if (fallbackCover) {
+                media.push(fallbackCover);
+            }
+
+            return [...new Set(media)].filter((item) => !isVideoUrl(item));
+        }
+
+        async function hydrateGameCardImages(games) {
+            await Promise.all(games.map(async (game) => {
+                try {
+                    const response = await fetch(`games/${game.slug}.md`);
+
+                    if (!response.ok) {
+                        throw new Error(`Unable to load ${game.slug}.md`);
+                    }
+
+                    const metadata = parseMarkdownMetadata(await response.text());
+                    game.cardImages = getCardImagesFromMetadata(metadata, game.cover);
+                } catch (error) {
+                    game.cardImages = [game.cover].filter(Boolean);
+                }
+            }));
+        }
+
+        function initializeCardImageCycling(container) {
+            container.querySelectorAll('[data-card-images]').forEach((card) => {
+                const primaryImage = card.querySelector('[data-card-image="primary"]');
+                const secondaryImage = card.querySelector('[data-card-image="secondary"]');
+                const images = JSON.parse(card.dataset.cardImages || '[]');
+                let intervalId;
+                let imageIndex = 0;
+                let showingSecondary = false;
+
+                if (!primaryImage || !secondaryImage || images.length < 2) {
+                    return;
+                }
+
+                function showNextImage() {
+                    const incomingImage = showingSecondary ? primaryImage : secondaryImage;
+                    const outgoingImage = showingSecondary ? secondaryImage : primaryImage;
+
+                    incomingImage.classList.remove('transition-none');
+                    outgoingImage.classList.remove('transition-none');
+                    incomingImage.classList.add('transition-opacity');
+                    outgoingImage.classList.add('transition-opacity');
+
+                    incomingImage.src = images[imageIndex];
+                    incomingImage.classList.remove('opacity-0');
+                    incomingImage.classList.add('opacity-80', 'group-hover:opacity-100');
+                    outgoingImage.classList.add('opacity-0');
+                    outgoingImage.classList.remove('opacity-80', 'group-hover:opacity-100');
+                    showingSecondary = !showingSecondary;
+                }
+
+                card.addEventListener('mouseenter', () => {
+                    intervalId = window.setInterval(() => {
+                        imageIndex = (imageIndex + 1) % images.length;
+                        showNextImage();
+                    }, 1600);
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    window.clearInterval(intervalId);
+                    intervalId = undefined;
+                    imageIndex = 0;
+                    primaryImage.src = images[0];
+                    primaryImage.classList.add('transition-none', 'opacity-80', 'group-hover:opacity-100');
+                    primaryImage.classList.remove('opacity-0');
+                    secondaryImage.classList.add('transition-none', 'opacity-0');
+                    secondaryImage.classList.remove('opacity-80', 'group-hover:opacity-100');
+                    showingSecondary = false;
+                });
+            });
+        }
+
+        function renderSelectedWorkCard(game) {
+            const tags = Array.isArray(game.tags) ? game.tags : [];
+            const cardImages = Array.isArray(game.cardImages) && game.cardImages.length ? game.cardImages : [game.cover];
+            const cardImagesAttribute = escapeHtml(JSON.stringify(cardImages));
+
+            return `
+                <a href="#/game/${encodeURIComponent(game.slug)}" class="group relative reveal block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30" aria-label="View ${escapeHtml(game.title)} game page" data-card-images="${cardImagesAttribute}">
+                    <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-dark-800 border border-white/5 group-hover:border-white/50 transition-colors duration-300 mb-6">
+                        <img src="${escapeHtml(cardImages[0])}" alt="${escapeHtml(game.title)}" data-card-image="primary" class="absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out group-hover:scale-105 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+                        <img src="${escapeHtml(cardImages[0])}" alt="" data-card-image="secondary" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out group-hover:scale-105 opacity-0 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-dark-900/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                    </div>
+                    <div class="flex min-w-0 justify-between items-start gap-4">
+                        <div class="min-w-0">
+                            <h3 class="font-heading text-2xl font-bold text-white mb-2">${escapeHtml(game.title)}</h3>
+                            <p class="text-neutral-400 text-sm mb-4 break-words">${escapeHtml(game.summary)}</p>
+                            <div class="flex flex-wrap gap-2">
+                                ${tags.map((tag) => `<span class="text-xs font-mono text-neutral-500 border border-neutral-800 px-2 py-1 rounded">${escapeHtml(tag)}</span>`).join('')}
+                            </div>
+                        </div>
+                        <span class="text-sm font-medium text-neutral-500">${escapeHtml(game.year)}</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        async function renderSelectedWorks(observer) {
+            try {
+                const response = await fetch('games.json');
+
+                if (!response.ok) {
+                    throw new Error('Unable to load games.json');
+                }
+
+                const games = await response.json();
+
+                const featuredGames = games.slice(0, 4);
+                const moreProjects = document.getElementById('selected-works-more');
+
+                await hydrateGameCardImages(featuredGames);
+                selectedWorksGrid.innerHTML = featuredGames.map(renderSelectedWorkCard).join('');
+                initializeCardImageCycling(selectedWorksGrid);
+                selectedWorksGrid.querySelectorAll('.reveal').forEach((card) => observer.observe(card));
+                moreProjects.classList.toggle('hidden', games.length <= featuredGames.length);
+                lucide.createIcons();
+            } catch (error) {
+                selectedWorksGrid.innerHTML = '<p class="text-neutral-500 text-sm">Selected works could not be loaded.</p>';
+            }
+        }
+
+        function getAllGames() {
+            if (!allGamesPromise) {
+                allGamesPromise = fetch('games.json').then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Unable to load games.json');
+                    }
+
+                    return response.json();
+                });
+            }
+
+            return allGamesPromise;
+        }
+
+        async function renderAllWorks() {
+            if (allWorksRendered) {
+                return;
+            }
+
+            try {
+                const games = await getAllGames();
+                await hydrateGameCardImages(games);
+                allWorksGrid.innerHTML = games.map(renderSelectedWorkCard).join('');
+                initializeCardImageCycling(allWorksGrid);
+                allWorksGrid.querySelectorAll('.reveal').forEach((card) => revealObserver.observe(card));
+                allWorksRendered = true;
+                lucide.createIcons();
+            } catch (error) {
+                allWorksGrid.innerHTML = '<p class="text-neutral-500 text-sm">Projects could not be loaded.</p>';
+            }
+        }
+
+        function parseMarkdownFile(source) {
+            const frontMatterMatch = source.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+            let body = source;
+
+            if (frontMatterMatch) {
+                body = source.slice(frontMatterMatch[0].length);
+            }
+
+            return {
+                metadata: parseMarkdownMetadata(source),
+                body,
+            };
+        }
+
+        function renderMeta(metadata) {
+            const tags = metadata.tags
+                ? metadata.tags.split(',').map((tag) => tag.trim()).filter(Boolean)
+                : [];
+
+            metaTags.innerHTML = tags.map((tag) => (
+                `<span class="text-xs font-mono text-neutral-300 border border-white/10 bg-black/30 px-3 py-1.5 rounded-full">${escapeHtml(tag)}</span>`
+            )).join('');
+
+            const details = [
+                metadata.year,
+                metadata.role,
+            ].filter(Boolean);
+
+            pageMeta.innerHTML = details.map((detail) => (
+                `<span>${escapeHtml(detail)}</span>`
+            )).join('');
+        }
+
+        function getGalleryMedia(metadata) {
+            const media = [];
+
+            if (metadata.cover) {
+                media.push(metadata.cover);
+            }
+
+            if (metadata.gallery) {
+                media.push(...metadata.gallery.split(',').map((item) => item.trim()).filter(Boolean));
+            }
+
+            return [...new Set(media)];
+        }
+
+        function closeFullscreenGallery() {
+            fullscreenGallery.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function openFullscreenImage(src, alt = '') {
+            if (!src) {
+                return;
+            }
+
+            window.getSelection()?.removeAllRanges();
+            fullscreenImage.src = src;
+            fullscreenImage.alt = alt;
+            fullscreenGallery.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function initializeGalleryThumbnailDragging() {
+            galleryThumbnails.addEventListener('pointerdown', (event) => {
+                if (event.button !== 0) {
+                    return;
+                }
+
+                isThumbnailDragging = true;
+                suppressThumbnailClick = false;
+                thumbnailPointerId = event.pointerId;
+                thumbnailDragStartX = event.clientX;
+                thumbnailDragStartScrollLeft = galleryThumbnails.scrollLeft;
+            });
+
+            document.addEventListener('pointermove', (event) => {
+                if (!isThumbnailDragging || event.pointerId !== thumbnailPointerId) {
+                    return;
+                }
+
+                const dragDistance = event.clientX - thumbnailDragStartX;
+
+                if (Math.abs(dragDistance) > 5) {
+                    suppressThumbnailClick = true;
+                }
+
+                galleryThumbnails.scrollLeft = thumbnailDragStartScrollLeft - dragDistance;
+                event.preventDefault();
+            });
+
+            function endThumbnailDrag(event) {
+                if (!isThumbnailDragging || event.pointerId !== thumbnailPointerId) {
+                    return;
+                }
+
+                isThumbnailDragging = false;
+                thumbnailPointerId = null;
+
+                window.setTimeout(() => {
+                    suppressThumbnailClick = false;
+                }, 0);
+            }
+
+            document.addEventListener('pointerup', endThumbnailDrag);
+            document.addEventListener('pointercancel', endThumbnailDrag);
+        }
+
+        function bindSwipeNavigation(element, options) {
+            const swipeThreshold = 48;
+            let pointerId = null;
+            let startX = 0;
+            let startY = 0;
+            let isHorizontalSwipe = false;
+
+            element.onpointerdown = (event) => {
+                if (event.button !== 0) {
+                    return;
+                }
+
+                pointerId = event.pointerId;
+                startX = event.clientX;
+                startY = event.clientY;
+                isHorizontalSwipe = false;
+            };
+
+            element.onpointermove = (event) => {
+                if (event.pointerId !== pointerId) {
+                    return;
+                }
+
+                const deltaX = event.clientX - startX;
+                const deltaY = event.clientY - startY;
+
+                if (Math.abs(deltaX) > 12 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+                    isHorizontalSwipe = true;
+                    options.onDrag?.(deltaX);
+                    event.preventDefault();
+                }
+            };
+
+            element.onpointerup = (event) => {
+                if (event.pointerId !== pointerId) {
+                    return;
+                }
+
+                const deltaX = event.clientX - startX;
+                const deltaY = event.clientY - startY;
+                pointerId = null;
+
+                if (Math.abs(deltaX) < swipeThreshold || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) {
+                    options.onCancel?.();
+                    return;
+                }
+
+                const direction = deltaX < 0 ? 'next' : 'previous';
+                const commit = direction === 'next' ? options.onNext : options.onPrevious;
+                options.onSwipe ? options.onSwipe(direction, deltaX, commit) : commit();
+            };
+
+            element.onpointercancel = () => {
+                pointerId = null;
+                isHorizontalSwipe = false;
+                options.onCancel?.();
+            };
+        }
+
+        function renderSwipePreview(container, mediaUrl, title) {
+            container.innerHTML = '';
+
+            if (isVideoUrl(mediaUrl)) {
+                const video = document.createElement('video');
+                video.src = mediaUrl;
+                video.muted = true;
+                video.preload = 'metadata';
+                video.className = 'w-full h-full aspect-video object-contain bg-black opacity-90';
+                video.setAttribute('aria-label', `${title} gallery preview video`);
+                container.appendChild(video);
+            } else {
+                const image = document.createElement('img');
+                image.src = mediaUrl;
+                image.alt = `${title} gallery preview`;
+                image.draggable = false;
+                image.className = 'w-full h-full aspect-video object-contain bg-black opacity-80 select-none';
+                container.appendChild(image);
+            }
+        }
+
+        function renderGallery(metadata, title) {
+            const mediaItems = getGalleryMedia(metadata);
+            let activeMediaIndex = 0;
+            let suppressGalleryFullscreenClick = false;
+
+            if (!mediaItems.length) {
+                gallery.classList.add('hidden');
+                return;
+            }
+
+            function setActiveMedia(index) {
+                activeMediaIndex = (index + mediaItems.length) % mediaItems.length;
+                const activeMedia = mediaItems[activeMediaIndex];
+                const activeMediaIsVideo = isVideoUrl(activeMedia);
+
+                galleryMainVideo.pause();
+                galleryFullscreenTrigger.classList.toggle('hidden', activeMediaIsVideo);
+                galleryMainVideo.classList.toggle('hidden', !activeMediaIsVideo);
+
+                if (activeMediaIsVideo) {
+                    galleryMainVideo.src = activeMedia;
+                    galleryMainVideo.setAttribute('aria-label', `${title} gallery video ${activeMediaIndex + 1}`);
+                    galleryMainImage.removeAttribute('src');
+                    fullscreenImage.removeAttribute('src');
+                } else {
+                    galleryMainImage.src = activeMedia;
+                    galleryMainImage.alt = `${title} gallery image ${activeMediaIndex + 1}`;
+                    fullscreenImage.src = activeMedia;
+                    fullscreenImage.alt = `${title} gallery image ${activeMediaIndex + 1}`;
+                    galleryMainVideo.removeAttribute('src');
+                    galleryMainVideo.load();
+                }
+
+                Array.from(galleryThumbnails.children).forEach((thumbnail, thumbnailIndex) => {
+                    thumbnail.setAttribute('aria-current', thumbnailIndex === activeMediaIndex ? 'true' : 'false');
+                });
+            }
+
+            galleryThumbnails.innerHTML = '';
+            galleryPrev.classList.toggle('hidden', mediaItems.length <= 1);
+            galleryNext.classList.toggle('hidden', mediaItems.length <= 1);
+            function getActiveGalleryElement() {
+                return isVideoUrl(mediaItems[activeMediaIndex]) ? galleryMainVideo : galleryFullscreenTrigger;
+            }
+
+            function resetGallerySwipeStyles() {
+                [galleryFullscreenTrigger, galleryMainVideo, gallerySwipePreview].forEach((element) => {
+                    element.classList.remove('swipe-animating');
+                    element.style.transform = '';
+                });
+                gallerySwipePreview.classList.add('hidden');
+            }
+
+            function dragGallery(deltaX) {
+                if (mediaItems.length <= 1) {
+                    return;
+                }
+
+                const activeElement = getActiveGalleryElement();
+                const direction = deltaX < 0 ? 1 : -1;
+                const previewIndex = (activeMediaIndex + direction + mediaItems.length) % mediaItems.length;
+
+                renderSwipePreview(gallerySwipePreview, mediaItems[previewIndex], title);
+                gallerySwipePreview.classList.remove('hidden');
+                activeElement.classList.remove('swipe-animating');
+                gallerySwipePreview.classList.remove('swipe-animating');
+                activeElement.style.transform = `translateX(${deltaX}px)`;
+                gallerySwipePreview.style.transform = `translateX(${direction * activeElement.clientWidth + deltaX}px)`;
+            }
+
+            galleryPrev.onclick = (event) => {
+                setActiveMedia(activeMediaIndex - 1);
+                event.currentTarget.blur();
+            };
+            galleryNext.onclick = (event) => {
+                setActiveMedia(activeMediaIndex + 1);
+                event.currentTarget.blur();
+            };
+            galleryFullscreenTrigger.onclick = () => {
+                if (suppressGalleryFullscreenClick) {
+                    suppressGalleryFullscreenClick = false;
+                    return;
+                }
+
+                openFullscreenImage(fullscreenImage.src, fullscreenImage.alt);
+            };
+            const gallerySwipeOptions = {
+                onPrevious: () => setActiveMedia(activeMediaIndex - 1),
+                onNext: () => setActiveMedia(activeMediaIndex + 1),
+                onDrag: dragGallery,
+                onCancel: resetGallerySwipeStyles,
+                onSwipe: (direction, deltaX, commit) => {
+                    const activeElement = getActiveGalleryElement();
+                    const slideDirection = direction === 'next' ? 1 : -1;
+
+                    suppressGalleryFullscreenClick = true;
+                    activeElement.classList.add('swipe-animating');
+                    gallerySwipePreview.classList.add('swipe-animating');
+                    activeElement.style.transform = `translateX(${-slideDirection * activeElement.clientWidth}px)`;
+                    gallerySwipePreview.style.transform = 'translateX(0)';
+
+                    window.setTimeout(() => {
+                        commit();
+                        resetGallerySwipeStyles();
+                    }, 220);
+                },
+            };
+
+            bindSwipeNavigation(galleryFullscreenTrigger, gallerySwipeOptions);
+            bindSwipeNavigation(galleryMainVideo, gallerySwipeOptions);
+
+            mediaItems.forEach((mediaItem, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'gallery-thumbnail relative shrink-0 w-28 md:w-36 aspect-video rounded-lg overflow-hidden border border-white/10 opacity-60 hover:opacity-100 hover:border-white/50 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30';
+                button.setAttribute('aria-label', `Show ${title} gallery item ${index + 1}`);
+
+                if (isVideoUrl(mediaItem)) {
+                    const thumbnail = document.createElement('video');
+                    thumbnail.src = mediaItem;
+                    thumbnail.muted = true;
+                    thumbnail.preload = 'metadata';
+                    thumbnail.className = 'w-full h-full object-cover';
+
+                    const playIcon = document.createElement('span');
+                    playIcon.className = 'absolute inset-0 flex items-center justify-center text-white bg-black/20';
+                    playIcon.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>';
+
+                    button.appendChild(thumbnail);
+                    button.appendChild(playIcon);
+                } else {
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = mediaItem;
+                    thumbnail.alt = '';
+                    thumbnail.className = 'w-full h-full object-cover';
+                    thumbnail.draggable = false;
+                    button.appendChild(thumbnail);
+                }
+
+                button.addEventListener('click', (event) => {
+                    if (suppressThumbnailClick) {
+                        event.preventDefault();
+                        suppressThumbnailClick = false;
+                        return;
+                    }
+
+                    setActiveMedia(index);
+                    event.currentTarget.blur();
+                });
+                galleryThumbnails.appendChild(button);
+            });
+
+            setActiveMedia(0);
+            gallery.classList.remove('hidden');
+        }
+
+        function sanitizeMarkdownBodyHtml(html) {
+            return DOMPurify.sanitize(html, {
+                ADD_TAGS: ['video', 'source'],
+                ADD_ATTR: ['playsinline', 'controls', 'preload', 'muted', 'poster', 'disablepictureinpicture', 'controlslist'],
+            });
+        }
+
+        function parseCarouselImages(content) {
+            return content
+                .split('\n')
+                .map((line) => line.trim())
+                .map((line) => line.match(/^!\[([^\]]*)\]\((\S+)(?:\s+["'][^"']*["'])?\)$/))
+                .filter(Boolean)
+                .map((match) => ({
+                    alt: match[1],
+                    src: match[2],
+                }));
+        }
+
+        function renderMarkdownCarousel(mediaItems) {
+            if (!mediaItems.length) {
+                return '';
+            }
+
+            if (mediaItems.length === 1) {
+                if (isVideoUrl(mediaItems[0].src)) {
+                    return renderMarkdownVideoEmbed(mediaItems);
+                }
+
+                return `![${mediaItems[0].alt}](${mediaItems[0].src})`;
+            }
+
+            const firstItem = mediaItems[0];
+            const firstItemIsVideo = isVideoUrl(firstItem.src);
+            const dots = mediaItems.map((item, index) => {
+                const mediaType = isVideoUrl(item.src) ? 'video' : 'image';
+                return `<button type="button" class="markdown-carousel-dot" aria-label="Show carousel ${mediaType} ${index + 1}" aria-current="${index === 0 ? 'true' : 'false'}" data-src="${escapeHtml(item.src)}" data-alt="${escapeHtml(item.alt)}" data-media-type="${mediaType}"></button>`;
+            }).join('');
+
+            return `
+<div class="markdown-carousel">
+    <div class="markdown-carousel-frame">
+        <img class="markdown-carousel-media markdown-carousel-image ${firstItemIsVideo ? 'hidden' : ''}" src="${firstItemIsVideo ? '' : escapeHtml(firstItem.src)}" alt="${firstItemIsVideo ? '' : escapeHtml(firstItem.alt)}" draggable="false">
+        <video class="markdown-carousel-media markdown-carousel-video ${firstItemIsVideo ? '' : 'hidden'}" controls playsinline preload="metadata" src="${firstItemIsVideo ? escapeHtml(firstItem.src) : ''}" aria-label="${firstItemIsVideo ? escapeHtml(firstItem.alt || 'Carousel video') : ''}"></video>
+        <img class="markdown-carousel-media markdown-carousel-image markdown-carousel-preview-image hidden" src="" alt="" draggable="false">
+        <video class="markdown-carousel-media markdown-carousel-video markdown-carousel-preview-video hidden" playsinline preload="none" muted disablePictureInPicture controlslist="nodownload noplaybackrate"></video>
+        <button type="button" class="markdown-carousel-button markdown-carousel-prev" aria-label="Previous carousel item">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <button type="button" class="markdown-carousel-button markdown-carousel-next" aria-label="Next carousel item">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+    </div>
+    <div class="markdown-carousel-dots">${dots}</div>
+</div>`;
+        }
+
+        function preprocessMarkdownCarousels(markdown) {
+            return markdown.replace(/:::carousel\s*\n([\s\S]*?)\n:::/g, (match, content) => (
+                renderMarkdownCarousel(parseCarouselImages(content))
+            ));
+        }
+
+        function renderMarkdownVideoEmbed(mediaItems) {
+            const videos = mediaItems.filter((item) => isVideoUrl(item.src));
+            if (!videos.length) {
+                return '';
+            }
+
+            const v = videos[0];
+            const label = escapeHtml(v.alt || 'Embedded video');
+
+            return `
+<div class="markdown-video-embed">
+    <video class="markdown-video-embed-video" controls playsinline preload="metadata" src="${escapeHtml(v.src)}" aria-label="${label}"></video>
+</div>`;
+        }
+
+        function renderMarkdownVideoCarousel(mediaItems) {
+            const vids = mediaItems.filter((item) => isVideoUrl(item.src));
+            if (!vids.length) {
+                return '';
+            }
+
+            if (vids.length < 2) {
+                return renderMarkdownVideoEmbed(mediaItems);
+            }
+
+            const first = vids[0];
+            const dots = vids.map((video, index) => (
+                `<button type="button" class="markdown-carousel-dot" aria-label="Show carousel video ${index + 1}" aria-current="${index === 0 ? 'true' : 'false'}" data-src="${escapeHtml(video.src)}" data-alt="${escapeHtml(video.alt)}"></button>`
+            )).join('');
+
+            return `
+<div class="markdown-carousel markdown-video-carousel">
+    <div class="markdown-carousel-frame">
+        <video class="markdown-carousel-main-video" controls playsinline preload="metadata" src="${escapeHtml(first.src)}" aria-label="${escapeHtml(first.alt || 'Gallery video')}"></video>
+        <video class="markdown-carousel-preview-video hidden" playsinline preload="none" muted disablePictureInPicture controlslist="nodownload noplaybackrate"></video>
+        <button type="button" class="markdown-carousel-button markdown-carousel-prev" aria-label="Previous carousel video">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <button type="button" class="markdown-carousel-button markdown-carousel-next" aria-label="Next carousel video">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+    </div>
+    <div class="markdown-carousel-dots">${dots}</div>
+</div>`;
+        }
+
+        function preprocessMarkdownVideoBlocks(markdown) {
+            let md = markdown.replace(/:::video-carousel\s*\n([\s\S]*?)\n:::/g, (match, content) => (
+                renderMarkdownVideoCarousel(parseCarouselImages(content))
+            ));
+            md = md.replace(/:::video\s*\n([\s\S]*?)\n:::/g, (match, content) => (
+                renderMarkdownVideoEmbed(parseCarouselImages(content))
+            ));
+            return md;
+        }
+
+        function preprocessGameMarkdownBody(markdown) {
+            let md = preprocessMarkdownVideoBlocks(markdown);
+            md = preprocessMarkdownCarousels(md);
+            return md;
+        }
+
+        function initializeMarkdownCarousels() {
+            markdownContent.querySelectorAll('.markdown-carousel:not(.markdown-video-carousel)').forEach((carousel) => {
+                const image = carousel.querySelector('.markdown-carousel-image');
+                const video = carousel.querySelector('.markdown-carousel-video:not(.markdown-carousel-preview-video)');
+                const previewImage = carousel.querySelector('.markdown-carousel-preview-image');
+                const previewVideo = carousel.querySelector('.markdown-carousel-preview-video');
+                const frame = carousel.querySelector('.markdown-carousel-frame');
+                const previousButton = carousel.querySelector('.markdown-carousel-prev');
+                const nextButton = carousel.querySelector('.markdown-carousel-next');
+                const dots = Array.from(carousel.querySelectorAll('.markdown-carousel-dot'));
+                let activeIndex = 0;
+
+                if (!image || !video || !previewImage || !previewVideo || !frame || !previousButton || !nextButton || dots.length < 2) {
+                    return;
+                }
+
+                function getVisibleMainElement() {
+                    return video.classList.contains('hidden') ? image : video;
+                }
+
+                function getPreviewElement(mediaType) {
+                    return mediaType === 'video' ? previewVideo : previewImage;
+                }
+
+                function hidePreviewMedia() {
+                    previewImage.classList.add('hidden');
+                    previewVideo.classList.add('hidden');
+                    previewVideo.pause();
+                }
+
+                function setActiveMedia(index) {
+                    activeIndex = (index + dots.length) % dots.length;
+                    const activeDot = dots[activeIndex];
+                    const mediaType = activeDot.dataset.mediaType || (isVideoUrl(activeDot.dataset.src) ? 'video' : 'image');
+
+                    if (mediaType === 'video') {
+                        image.classList.add('hidden');
+                        video.classList.remove('hidden');
+                        video.src = activeDot.dataset.src;
+                        video.setAttribute('aria-label', activeDot.dataset.alt || 'Carousel video');
+                    } else {
+                        video.pause();
+                        video.classList.add('hidden');
+                        image.classList.remove('hidden');
+                        image.src = activeDot.dataset.src;
+                        image.alt = activeDot.dataset.alt || '';
+                    }
+
+                    dots.forEach((dot, dotIndex) => {
+                        dot.setAttribute('aria-current', dotIndex === activeIndex ? 'true' : 'false');
+                    });
+                }
+
+                previousButton.addEventListener('click', (event) => {
+                    setActiveMedia(activeIndex - 1);
+                    event.currentTarget.blur();
+                });
+                nextButton.addEventListener('click', (event) => {
+                    setActiveMedia(activeIndex + 1);
+                    event.currentTarget.blur();
+                });
+                function resetMarkdownSwipeStyles() {
+                    [image, video, previewImage, previewVideo].forEach((element) => {
+                        element.classList.remove('swipe-animating');
+                        element.style.transform = '';
+                    });
+                    hidePreviewMedia();
+                }
+
+                function dragMarkdownCarousel(deltaX) {
+                    const direction = deltaX < 0 ? 1 : -1;
+                    const previewIndex = (activeIndex + direction + dots.length) % dots.length;
+                    const previewDot = dots[previewIndex];
+                    const previewMediaType = previewDot.dataset.mediaType || (isVideoUrl(previewDot.dataset.src) ? 'video' : 'image');
+                    const activeElement = getVisibleMainElement();
+                    const previewElement = getPreviewElement(previewMediaType);
+
+                    hidePreviewMedia();
+                    if (previewMediaType === 'video') {
+                        previewVideo.src = previewDot.dataset.src;
+                        previewVideo.setAttribute('aria-label', previewDot.dataset.alt || 'Carousel video preview');
+                    } else {
+                        previewImage.src = previewDot.dataset.src;
+                        previewImage.alt = previewDot.dataset.alt || '';
+                    }
+
+                    previewElement.classList.remove('hidden');
+                    activeElement.classList.remove('swipe-animating');
+                    previewElement.classList.remove('swipe-animating');
+                    activeElement.style.transform = `translateX(${deltaX}px)`;
+                    previewElement.style.transform = `translateX(${direction * frame.clientWidth + deltaX}px)`;
+                }
+
+                bindSwipeNavigation(frame, {
+                    onPrevious: () => setActiveMedia(activeIndex - 1),
+                    onNext: () => setActiveMedia(activeIndex + 1),
+                    onDrag: dragMarkdownCarousel,
+                    onCancel: resetMarkdownSwipeStyles,
+                    onSwipe: (direction, deltaX, commit) => {
+                        const slideDirection = direction === 'next' ? 1 : -1;
+                        const activeElement = getVisibleMainElement();
+                        const previewElement = previewImage.classList.contains('hidden') ? previewVideo : previewImage;
+
+                        activeElement.classList.add('swipe-animating');
+                        previewElement.classList.add('swipe-animating');
+                        activeElement.style.transform = `translateX(${-slideDirection * frame.clientWidth}px)`;
+                        previewElement.style.transform = 'translateX(0)';
+
+                        window.setTimeout(() => {
+                            commit();
+                            resetMarkdownSwipeStyles();
+                        }, 220);
+                    },
+                });
+                dots.forEach((dot, dotIndex) => {
+                    dot.addEventListener('click', (event) => {
+                        setActiveMedia(dotIndex);
+                        event.currentTarget.blur();
+                    });
+                });
+            });
+        }
+
+        function initializeMarkdownVideoCarousels() {
+            markdownContent.querySelectorAll('.markdown-video-carousel').forEach((carousel) => {
+                const mainVideo = carousel.querySelector('.markdown-carousel-main-video');
+                const previewVideo = carousel.querySelector('.markdown-carousel-preview-video');
+                const frame = carousel.querySelector('.markdown-carousel-frame');
+                const previousButton = carousel.querySelector('.markdown-carousel-prev');
+                const nextButton = carousel.querySelector('.markdown-carousel-next');
+                const dots = Array.from(carousel.querySelectorAll('.markdown-carousel-dot'));
+                let activeIndex = 0;
+
+                if (!mainVideo || !previewVideo || !frame || !previousButton || !nextButton || dots.length < 2) {
+                    return;
+                }
+
+                function resetVideoSwipeStyles() {
+                    [mainVideo, previewVideo].forEach((el) => {
+                        el.classList.remove('swipe-animating');
+                        el.style.transform = '';
+                    });
+                    previewVideo.classList.add('hidden');
+                    previewVideo.pause();
+                    previewVideo.removeAttribute('src');
+                    previewVideo.load();
+                }
+
+                function setActiveVideo(index) {
+                    activeIndex = (index + dots.length) % dots.length;
+                    const activeDot = dots[activeIndex];
+                    resetVideoSwipeStyles();
+
+                    mainVideo.pause();
+                    mainVideo.src = activeDot.dataset.src;
+                    mainVideo.setAttribute('aria-label', activeDot.dataset.alt || `Video clip ${activeIndex + 1}`);
+
+                    dots.forEach((dot, dotIndex) => {
+                        dot.setAttribute('aria-current', dotIndex === activeIndex ? 'true' : 'false');
+                    });
+                }
+
+                previousButton.addEventListener('click', (event) => {
+                    setActiveVideo(activeIndex - 1);
+                    event.currentTarget.blur();
+                });
+                nextButton.addEventListener('click', (event) => {
+                    setActiveVideo(activeIndex + 1);
+                    event.currentTarget.blur();
+                });
+
+                function dragVideoCarousel(deltaX) {
+                    const direction = deltaX < 0 ? 1 : -1;
+                    const previewIndex = (activeIndex + direction + dots.length) % dots.length;
+                    const previewDot = dots[previewIndex];
+                    previewVideo.src = previewDot.dataset.src || '';
+                    previewVideo.classList.remove('hidden');
+                    mainVideo.classList.remove('swipe-animating');
+                    previewVideo.classList.remove('swipe-animating');
+                    mainVideo.style.transform = `translateX(${deltaX}px)`;
+                    previewVideo.style.transform = `translateX(${direction * frame.clientWidth + deltaX}px)`;
+                }
+
+                bindSwipeNavigation(frame, {
+                    onPrevious: () => setActiveVideo(activeIndex - 1),
+                    onNext: () => setActiveVideo(activeIndex + 1),
+                    onDrag: dragVideoCarousel,
+                    onCancel: resetVideoSwipeStyles,
+                    onSwipe: (direction, deltaX, commit) => {
+                        const slideDirection = direction === 'next' ? 1 : -1;
+
+                        mainVideo.classList.add('swipe-animating');
+                        previewVideo.classList.add('swipe-animating');
+                        mainVideo.style.transform = `translateX(${-slideDirection * frame.clientWidth}px)`;
+                        previewVideo.style.transform = 'translateX(0)';
+
+                        window.setTimeout(() => {
+                            commit();
+                        }, 220);
+                    },
+                });
+
+                dots.forEach((dot, dotIndex) => {
+                    dot.addEventListener('click', (event) => {
+                        setActiveVideo(dotIndex);
+                        event.currentTarget.blur();
+                    });
+                });
+            });
+        }
+
+        function createHeadingId(text, existingIds) {
+            const baseId = text
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-') || 'section';
+            let id = baseId;
+            let index = 2;
+
+            while (existingIds.has(id) || document.getElementById(id)) {
+                id = `${baseId}-${index}`;
+                index += 1;
+            }
+
+            existingIds.add(id);
+            return id;
+        }
+
+        function buildGamePageToc() {
+            const headings = Array.from(markdownContent.querySelectorAll('h2'));
+            const existingIds = new Set();
+
+            gamePageTocList.innerHTML = '';
+
+            if (!headings.length) {
+                gamePageToc.classList.add('hidden');
+                return;
+            }
+
+            headings.forEach((heading) => {
+                if (!heading.id) {
+                    heading.id = createHeadingId(heading.textContent || '', existingIds);
+                } else {
+                    existingIds.add(heading.id);
+                }
+
+                const button = document.createElement('button');
+
+                button.type = 'button';
+                button.className = 'game-page-toc-button py-1 pl-3 text-sm font-medium text-neutral-500 hover:text-white focus:outline-none focus-visible:text-white';
+                button.textContent = heading.textContent || 'Section';
+                button.addEventListener('click', () => {
+                    heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    button.blur();
+                });
+
+                gamePageTocList.appendChild(button);
+            });
+
+            gamePageToc.classList.remove('hidden');
+            updateGamePageTocPosition();
+        }
+
+        function updateGamePageTocPosition() {
+            if (
+                gamePageToc.classList.contains('hidden') ||
+                gameView.classList.contains('hidden') ||
+                window.innerWidth < 1280
+            ) {
+                gamePageToc.classList.remove('is-floating');
+                return;
+            }
+
+            const markdownTop = markdownContent.getBoundingClientRect().top;
+            const shouldFloat = markdownTop <= 112;
+
+            if (!shouldFloat) {
+                gamePageToc.classList.remove('is-floating');
+                return;
+            }
+
+            gamePageToc.classList.remove('is-floating');
+            const tocRect = gamePageToc.getBoundingClientRect();
+
+            gamePageToc.style.setProperty('--game-page-toc-left', `${tocRect.left}px`);
+            gamePageToc.style.setProperty('--game-page-toc-width', `${tocRect.width}px`);
+            gamePageToc.classList.add('is-floating');
+        }
+
+        function initializeMarkdownFullscreenImages() {
+            markdownContent.addEventListener('click', (event) => {
+                const target = event.target instanceof Element ? event.target : null;
+
+                if (!target || target.closest('.markdown-carousel-button, .markdown-carousel-dot')) {
+                    return;
+                }
+
+                const image = target.closest('img');
+
+                if (!image || !markdownContent.contains(image)) {
+                    return;
+                }
+
+                openFullscreenImage(image.currentSrc || image.src, image.alt);
+            });
+        }
+
+        function showGameError(message) {
+            loadingState.classList.add('hidden');
+            gamePage.classList.add('hidden');
+            errorMessage.textContent = message;
+            errorState.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        async function renderGamePage(slug) {
+            loadingState.classList.remove('hidden');
+            errorState.classList.add('hidden');
+            gamePage.classList.add('hidden');
+            gallery.classList.add('hidden');
+            markdownContent.innerHTML = '';
+            gamePageTocList.innerHTML = '';
+            gamePageToc.classList.add('hidden');
+            gamePageToc.classList.remove('is-floating');
+
+            if (!slug || !allowedSlugPattern.test(slug)) {
+                showGameError('Choose a project from the Selected Works grid to view its game page.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`games/${slug}.md`);
+
+                if (!response.ok) {
+                    throw new Error(`Missing markdown file for ${slug}.`);
+                }
+
+                const source = await response.text();
+                const { metadata, body } = parseMarkdownFile(source);
+                const title = metadata.title || slug.replaceAll('-', ' ');
+
+                activeGameSlug = slug;
+                document.title = `${title} | Kacper Malek`;
+                pageTitle.textContent = title;
+                renderMeta(metadata);
+                renderGallery(metadata, title);
+
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                });
+
+                markdownContent.innerHTML = sanitizeMarkdownBodyHtml(marked.parse(preprocessGameMarkdownBody(body)));
+                initializeMarkdownCarousels();
+                initializeMarkdownVideoCarousels();
+                buildGamePageToc();
+                loadingState.classList.add('hidden');
+                gamePage.classList.remove('hidden');
+                lucide.createIcons();
+            } catch (error) {
+                showGameError('This project page could not be loaded. Check that the matching markdown file exists in the games folder.');
+            }
+        }
+
+        // Hero Background Carousel Logic
+        const bgCarouselImgs = document.querySelectorAll('.bg-carousel-img');
+        let currentBgImgIndex = 0;
+
+        if (bgCarouselImgs.length > 1) {
+            setInterval(() => {
+                // Fade out current image
+                bgCarouselImgs[currentBgImgIndex].classList.remove('opacity-35');
+                bgCarouselImgs[currentBgImgIndex].classList.add('opacity-0');
+
+                // Advance to next image index
+                currentBgImgIndex = (currentBgImgIndex + 1) % bgCarouselImgs.length;
+
+                // Fade in next image
+                bgCarouselImgs[currentBgImgIndex].classList.remove('opacity-0');
+                bgCarouselImgs[currentBgImgIndex].classList.add('opacity-35');
+            }, 4000); // Transitions every 4 seconds
+        }
+
+        // Scroll Reveal Animation via Intersection Observer
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        function showRouteView(activeView) {
+            routeViews.forEach((view) => {
+                view.classList.toggle('hidden', view !== activeView);
+            });
+        }
+
+        function scrollToCurrentHash() {
+            const hash = window.location.hash;
+
+            if (!hash || hash.startsWith('#/')) {
+                window.scrollTo({ top: 0, behavior: 'auto' });
+                return;
+            }
+
+            const target = document.getElementById(hash.slice(1));
+            if (target) {
+                target.scrollIntoView();
+            } else {
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            }
+        }
+
+        function wait(ms) {
+            return new Promise((resolve) => {
+                window.setTimeout(resolve, ms);
+            });
+        }
+
+        async function withRouteTransition(renderCurrentRoute) {
+            const transitionId = ++routeTransitionId;
+
+            if (!hasRenderedRoute) {
+                await renderCurrentRoute();
+                hasRenderedRoute = true;
+                return;
+            }
+
+            routeTransitionOverlay.classList.add('is-visible');
+
+            const loaderDelay = window.setTimeout(() => {
+                if (transitionId === routeTransitionId) {
+                    routeTransitionLoader.classList.add('is-visible');
+                }
+            }, 1000);
+
+            try {
+                await wait(220);
+                await renderCurrentRoute();
+                await wait(80);
+            } finally {
+                window.clearTimeout(loaderDelay);
+
+                if (transitionId === routeTransitionId) {
+                    routeTransitionLoader.classList.remove('is-visible');
+                    routeTransitionOverlay.classList.remove('is-visible');
+                }
+            }
+        }
+
+        async function renderRoute() {
+            const hash = window.location.hash || '#/';
+            const isHomeRoute = !hash.startsWith('#/works') && !hash.startsWith('#/game/');
+
+            closeFullscreenGallery();
+
+            const renderCurrentRoute = async () => {
+                if (hash === '#/works') {
+                    showRouteView(worksView);
+                    gamePageToc.classList.remove('is-floating');
+                    document.title = 'Selected Works | Kacper Malek';
+                    await renderAllWorks();
+                    window.scrollTo({ top: 0, behavior: 'auto' });
+                    return;
+                }
+
+                if (hash.startsWith('#/game/')) {
+                    const slug = decodeURIComponent(hash.slice('#/game/'.length));
+                    showRouteView(gameView);
+                    await renderGamePage(slug);
+                    window.scrollTo({ top: 0, behavior: 'auto' });
+                    requestAnimationFrame(updateGamePageTocPosition);
+                    return;
+                }
+
+                activeGameSlug = '';
+                gamePageToc.classList.remove('is-floating');
+                showRouteView(homeView);
+                document.title = 'Kacper Malek | Game Developer';
+                scrollToCurrentHash();
+            };
+
+            if (isHomeRoute && !homeView.classList.contains('hidden')) {
+                await renderCurrentRoute();
+                return;
+            }
+
+            await withRouteTransition(renderCurrentRoute);
+        }
+
+        fullscreenClose.addEventListener('click', (event) => {
+            closeFullscreenGallery();
+            event.currentTarget.blur();
+        });
+
+        fullscreenGallery.addEventListener('click', (event) => {
+            if (event.target === fullscreenGallery) {
+                closeFullscreenGallery();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !fullscreenGallery.classList.contains('hidden')) {
+                closeFullscreenGallery();
+            }
+        });
+
+        window.addEventListener('resize', updateGamePageTocPosition);
+
+        initializeMarkdownFullscreenImages();
+        initializeGalleryThumbnailDragging();
+        renderSelectedWorks(revealObserver);
+        window.addEventListener('hashchange', renderRoute);
+        renderRoute();
+    </script>
+</body>
+</html>

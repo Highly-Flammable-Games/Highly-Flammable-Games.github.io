@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #000000; color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Game | Kacper Malek</title>
+    <style>
+        html,
+        body {
+            background-color: #000000;
+            color: #e5e5e5;
+            margin: 0;
+        }
+    </style>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('slug');
+        const route = slug ? `#/game/${encodeURIComponent(slug)}` : '#/works';
+        window.location.replace(`index.html${route}`);
+    </script>
+</head>
+<body>
+    <p><a href="index.html#/works" style="color: #ffffff;">Open Portfolio</a></p>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" style="background-color: #000000; color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Game | Kacper Malek</title>
+    <style>
+        html,
+        body {
+            background-color: #000000;
+        }
+
+        body {
+            opacity: 1;
+            transition: opacity 160ms ease;
+        }
+
+        body.is-page-exiting {
+            opacity: 0;
+        }
+    </style>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#000000',
+                            800: '#0a0a0a',
+                            700: '#111111',
+                            600: '#1a1a1a',
+                        },
+                        accent: {
+                            500: '#ffffff',
+                            400: '#a3a3a3',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Markdown Rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+
+    <style>
+        body {
+            background-color: #000000;
+            color: #e5e5e5;
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        .markdown-body h1,
+        .markdown-body h2,
+        .markdown-body h3 {
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+        }
+
+        .markdown-body h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .markdown-body h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .markdown-body p {
+            color: #a3a3a3;
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+
+        .markdown-body a {
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .markdown-body a:hover,
+        .markdown-body a:focus-visible {
+            border-color: rgba(255, 255, 255, 0.8);
+            color: #e5e5e5;
+        }
+
+        .markdown-body ul,
+        .markdown-body ol {
+            color: #a3a3a3;
+            line-height: 1.8;
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+
+        .markdown-body ul {
+            list-style: disc;
+        }
+
+        .markdown-body ol {
+            list-style: decimal;
+        }
+
+        .markdown-body li {
+            padding-left: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body blockquote {
+            border-left: 2px solid rgba(255, 255, 255, 0.25);
+            color: #d4d4d4;
+            margin: 2rem 0;
+            padding-left: 1.25rem;
+        }
+
+        .markdown-body img {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            cursor: zoom-in;
+            margin: 2rem 0;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .markdown-body code {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.375rem;
+            color: #ffffff;
+            font-size: 0.9em;
+            padding: 0.15rem 0.35rem;
+        }
+
+        .markdown-body pre {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+            padding: 1.25rem;
+        }
+
+        .markdown-body pre code {
+            background: transparent;
+            border: 0;
+            padding: 0;
+        }
+
+        .gallery-thumbnail[aria-current="true"] {
+            border-color: rgba(255, 255, 255, 0.8);
+            opacity: 1;
+        }
+
+        .gallery-thumbnail {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .gallery-thumbnail:active {
+            transform: none;
+        }
+
+        .markdown-carousel {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .markdown-carousel-frame {
+            isolation: isolate;
+            position: relative;
+        }
+
+        .markdown-body .markdown-carousel-image,
+        .markdown-body .markdown-carousel-video {
+            aspect-ratio: 16 / 9;
+            border: 0;
+            border-radius: 0;
+            display: block;
+            margin: 0;
+            background: #000000;
+            object-fit: contain;
+            opacity: 0.85;
+            user-select: none;
+            -webkit-user-drag: none;
+            width: 100%;
+        }
+
+        .markdown-carousel-media.hidden {
+            display: none;
+        }
+
+        .markdown-carousel-button {
+            align-items: center;
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            color: #ffffff;
+            display: flex;
+            height: 2.75rem;
+            justify-content: center;
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: background 0.2s ease, border-color 0.2s ease;
+            width: 2.75rem;
+        }
+
+        .markdown-carousel-button:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.35);
+            outline: none;
+        }
+
+        .markdown-carousel-button:focus {
+            outline: none;
+        }
+
+        .markdown-carousel-button:focus-visible {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.35);
+            outline: 2px solid rgba(255, 255, 255, 0.3);
+            outline-offset: 2px;
+        }
+
+        .markdown-carousel-prev {
+            left: 1rem;
+        }
+
+        .markdown-carousel-next {
+            right: 1rem;
+        }
+
+        .markdown-carousel-dots {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .markdown-carousel-dot {
+            appearance: none;
+            background: rgba(255, 255, 255, 0.28);
+            border: 0;
+            border-radius: 999px;
+            cursor: pointer;
+            display: block;
+            flex: 0 0 auto;
+            font-size: 0;
+            height: 0.65rem;
+            line-height: 0;
+            padding: 0;
+            transition: background 0.2s ease, transform 0.2s ease;
+            width: 0.65rem;
+        }
+
+        .markdown-carousel-dot:hover,
+        .markdown-carousel-dot:focus-visible,
+        .markdown-carousel-dot[aria-current="true"] {
+            background: #ffffff;
+            outline: none;
+            transform: scale(1.15);
+        }
+
+        @media (max-width: 640px) {
+            .markdown-carousel-button {
+                height: 2.25rem;
+                width: 2.25rem;
+            }
+
+            .markdown-carousel-prev {
+                left: 0.75rem;
+            }
+
+            .markdown-carousel-next {
+                right: 0.75rem;
+            }
+        }
+
+        #fullscreen-gallery {
+            caret-color: transparent;
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden selection:bg-white selection:text-black" style="background-color: #000000;">
+    <div class="fixed inset-0 z-[-1] bg-grid pointer-events-none"></div>
+    <div class="fixed top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-accent-500/10 blur-[120px] pointer-events-none z-[-1]"></div>
+    <div class="fixed bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-white/5 blur-[150px] pointer-events-none z-[-1]"></div>
+
+    <!-- Bottom Screen Fade Overlay -->
+    <div class="fixed bottom-0 left-0 w-full h-16 pointer-events-none z-40" style="background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.1) 80%, rgba(0,0,0,0) 100%);"></div>
+
+    <!-- Back To Top -->
+    <button id="back-to-top" type="button" aria-label="Back to top" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 w-12 h-12 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white shadow-2xl flex items-center justify-center opacity-0 pointer-events-none translate-y-4 transition-all duration-300 hover:bg-white/10 hover:border-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <header class="fixed top-0 w-full z-50">
+        <div class="absolute top-0 left-0 w-full h-[120px] bg-black/70 backdrop-blur-md pointer-events-none" style="-webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between relative z-10">
+            <a href="index.html" class="font-heading font-bold text-xl tracking-tighter text-white flex items-center gap-2">
+                <i data-lucide="gamepad-2" class="w-6 h-6 text-accent-500"></i>
+                KM.DEV
+            </a>
+            <a href="index.html#work" class="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Work
+            </a>
+        </div>
+    </header>
+
+    <main class="min-h-screen pt-32 pb-24">
+        <article class="max-w-5xl mx-auto px-6 lg:px-12">
+            <section id="loading-state" class="rounded-3xl border border-white/10 bg-white/[0.02] p-8 md:p-12">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-accent-400 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                    Loading project
+                </div>
+                <h1 class="font-heading text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4">Loading Game Page</h1>
+                <p class="text-neutral-400 max-w-2xl">Fetching the markdown case study for this project.</p>
+            </section>
+
+            <section id="error-state" class="hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 md:p-12">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-accent-400 mb-6">
+                    <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                    Not found
+                </div>
+                <h1 class="font-heading text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4">Game Page Not Found</h1>
+                <p id="error-message" class="text-neutral-400 max-w-2xl mb-8">This project page could not be loaded.</p>
+                <a href="index.html#work" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-dark-900 font-semibold hover:bg-neutral-200 transition-colors">
+                    Back to Selected Works
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </section>
+
+            <section id="game-page" class="hidden">
+                <div class="text-center mb-10 md:mb-14">
+                    <h1 id="page-title" class="font-heading text-5xl md:text-7xl font-bold tracking-tighter text-white mb-5"></h1>
+                    <div id="page-meta" class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-neutral-400 mb-5"></div>
+                    <div id="meta-tags" class="flex flex-wrap justify-center gap-2"></div>
+                </div>
+
+                <div id="gallery" class="hidden mb-12 md:mb-16">
+                    <div class="group/gallery relative overflow-hidden rounded-3xl border border-white/10 bg-dark-800 shadow-2xl">
+                        <button id="gallery-fullscreen-trigger" type="button" class="block w-full select-none focus:outline-none focus:ring-2 focus:ring-white/30" aria-label="Open gallery image fullscreen">
+                            <img id="gallery-main-image" src="" alt="" draggable="false" class="w-full aspect-video object-contain bg-black opacity-80 transition-opacity duration-300 select-none">
+                        </button>
+                        <video id="gallery-main-video" class="hidden w-full aspect-video object-contain bg-black opacity-90" controls preload="metadata"></video>
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/50 via-transparent to-dark-900/20 pointer-events-none"></div>
+                        <button id="gallery-prev" type="button" aria-label="Previous gallery image" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-white flex items-center justify-center opacity-0 pointer-events-none group-hover/gallery:opacity-100 group-hover/gallery:pointer-events-auto focus:opacity-100 focus:pointer-events-auto hover:bg-white/10 hover:border-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 transition-colors">
+                            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                        </button>
+                        <button id="gallery-next" type="button" aria-label="Next gallery image" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-white flex items-center justify-center opacity-0 pointer-events-none group-hover/gallery:opacity-100 group-hover/gallery:pointer-events-auto focus:opacity-100 focus:pointer-events-auto hover:bg-white/10 hover:border-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 transition-colors">
+                            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                    <div id="gallery-thumbnails" class="mt-3 flex gap-3 overflow-x-auto pb-2 cursor-grab select-none active:cursor-grabbing"></div>
+                </div>
+
+                <div id="markdown-content" class="markdown-body max-w-3xl mx-auto"></div>
+            </section>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 bg-dark-900/50 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="font-heading font-bold text-xl tracking-tighter text-white flex items-center gap-2">
+                <i data-lucide="gamepad-2" class="w-5 h-5 text-accent-500"></i>
+                KM.DEV
+            </div>
+
+            <p class="text-neutral-500 text-sm">© <span id="year"></span> Kacper Malek. All rights reserved.</p>
+
+            <div class="flex items-center gap-4 text-neutral-500">
+                <a href="https://github.com/vos6434" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors p-2" aria-label="GitHub profile">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.93.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.31 9.31 0 0 1 12 7c.85 0 1.7.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.95.68 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.18.59.69.49A10.08 10.08 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"></path>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/kacper-k-malek/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors p-2" aria-label="LinkedIn profile"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                <a href="https://geegeestudios.itch.io/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors p-2" aria-label="Itch.io profile"><i data-lucide="gamepad-2" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="fullscreen-gallery" class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-sm p-4 md:p-8">
+        <button id="fullscreen-close" type="button" aria-label="Close fullscreen image" class="absolute top-5 right-5 z-10 w-12 h-12 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 transition-colors">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <img id="fullscreen-image" src="" alt="" draggable="false" class="w-full h-full object-contain pointer-events-none select-none">
+    </div>
+
+    <script>
+        function initializePageTransitions() {
+            document.addEventListener('click', (event) => {
+                const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+
+                if (
+                    !link ||
+                    event.defaultPrevented ||
+                    event.button !== 0 ||
+                    event.metaKey ||
+                    event.ctrlKey ||
+                    event.shiftKey ||
+                    event.altKey ||
+                    link.target ||
+                    link.hasAttribute('download')
+                ) {
+                    return;
+                }
+
+                const url = new URL(link.href, window.location.href);
+                const isSamePageHash = url.pathname === window.location.pathname &&
+                    url.search === window.location.search &&
+                    url.hash;
+
+                if (url.origin !== window.location.origin || isSamePageHash) {
+                    return;
+                }
+
+                event.preventDefault();
+                document.body.classList.add('is-page-exiting');
+                window.setTimeout(() => {
+                    window.location.href = url.href;
+                }, 160);
+            });
+        }
+
+        initializePageTransitions();
+
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const allowedSlugPattern = /^[a-z0-9-]+$/;
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('slug');
+        const loadingState = document.getElementById('loading-state');
+        const errorState = document.getElementById('error-state');
+        const errorMessage = document.getElementById('error-message');
+        const gamePage = document.getElementById('game-page');
+        const markdownContent = document.getElementById('markdown-content');
+        const pageTitle = document.getElementById('page-title');
+        const pageMeta = document.getElementById('page-meta');
+        const metaTags = document.getElementById('meta-tags');
+        const gallery = document.getElementById('gallery');
+        const galleryMainImage = document.getElementById('gallery-main-image');
+        const galleryMainVideo = document.getElementById('gallery-main-video');
+        const galleryFullscreenTrigger = document.getElementById('gallery-fullscreen-trigger');
+        const galleryThumbnails = document.getElementById('gallery-thumbnails');
+        const galleryPrev = document.getElementById('gallery-prev');
+        const galleryNext = document.getElementById('gallery-next');
+        const fullscreenGallery = document.getElementById('fullscreen-gallery');
+        const fullscreenImage = document.getElementById('fullscreen-image');
+        const fullscreenClose = document.getElementById('fullscreen-close');
+        const backToTopBtn = document.getElementById('back-to-top');
+        let isThumbnailDragging = false;
+        let thumbnailDragStartX = 0;
+        let thumbnailDragStartScrollLeft = 0;
+        let suppressThumbnailClick = false;
+        let thumbnailPointerId = null;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', (event) => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            event.currentTarget.blur();
+        });
+
+        function closeFullscreenGallery() {
+            fullscreenGallery.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function openFullscreenImage(src, alt = '') {
+            if (!src) {
+                return;
+            }
+
+            window.getSelection()?.removeAllRanges();
+
+            if (document.activeElement instanceof HTMLElement) {
+                document.activeElement.blur();
+            }
+
+            fullscreenImage.src = src;
+            fullscreenImage.alt = alt;
+            fullscreenGallery.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        fullscreenClose.addEventListener('click', (event) => {
+            closeFullscreenGallery();
+            event.currentTarget.blur();
+        });
+
+        fullscreenGallery.addEventListener('click', (event) => {
+            if (event.target === fullscreenGallery) {
+                closeFullscreenGallery();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !fullscreenGallery.classList.contains('hidden')) {
+                closeFullscreenGallery();
+            }
+        });
+
+        galleryThumbnails.addEventListener('pointerdown', (event) => {
+            if (event.button !== 0) {
+                return;
+            }
+
+            isThumbnailDragging = true;
+            suppressThumbnailClick = false;
+            thumbnailPointerId = event.pointerId;
+            thumbnailDragStartX = event.clientX;
+            thumbnailDragStartScrollLeft = galleryThumbnails.scrollLeft;
+        });
+
+        document.addEventListener('pointermove', (event) => {
+            if (!isThumbnailDragging || event.pointerId !== thumbnailPointerId) {
+                return;
+            }
+
+            const dragDistance = event.clientX - thumbnailDragStartX;
+
+            if (Math.abs(dragDistance) > 5) {
+                suppressThumbnailClick = true;
+            }
+
+            galleryThumbnails.scrollLeft = thumbnailDragStartScrollLeft - dragDistance;
+            event.preventDefault();
+        });
+
+        function endThumbnailDrag(event) {
+            if (!isThumbnailDragging || event.pointerId !== thumbnailPointerId) {
+                return;
+            }
+
+            isThumbnailDragging = false;
+            thumbnailPointerId = null;
+
+            setTimeout(() => {
+                suppressThumbnailClick = false;
+            }, 0);
+        }
+
+        document.addEventListener('pointerup', endThumbnailDrag);
+        document.addEventListener('pointercancel', endThumbnailDrag);
+
+        function showError(message) {
+            loadingState.classList.add('hidden');
+            gamePage.classList.add('hidden');
+            errorMessage.textContent = message;
+            errorState.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function parseMarkdownFile(source) {
+            const frontMatterMatch = source.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+            const metadata = {};
+            let body = source;
+
+            if (frontMatterMatch) {
+                body = source.slice(frontMatterMatch[0].length);
+
+                frontMatterMatch[1].split('\n').forEach((line) => {
+                    const separatorIndex = line.indexOf(':');
+
+                    if (separatorIndex === -1) {
+                        return;
+                    }
+
+                    const key = line.slice(0, separatorIndex).trim();
+                    const value = line.slice(separatorIndex + 1).trim();
+                    metadata[key] = value;
+                });
+            }
+
+            return { metadata, body };
+        }
+
+        function renderMeta(metadata) {
+            const tags = metadata.tags
+                ? metadata.tags.split(',').map((tag) => tag.trim()).filter(Boolean)
+                : [];
+
+            metaTags.innerHTML = tags.map((tag) => (
+                `<span class="text-xs font-mono text-neutral-300 border border-white/10 bg-black/30 px-3 py-1.5 rounded-full">${DOMPurify.sanitize(tag)}</span>`
+            )).join('');
+
+            const details = [
+                metadata.year,
+                metadata.role,
+            ].filter(Boolean);
+
+            pageMeta.innerHTML = details.map((detail) => (
+                `<span>${DOMPurify.sanitize(detail)}</span>`
+            )).join('');
+        }
+
+        function isVideoUrl(url) {
+            try {
+                return /\.(mp4|webm|ogg)$/i.test(new URL(url, window.location.href).pathname);
+            } catch (error) {
+                return /\.(mp4|webm|ogg)$/i.test(url);
+            }
+        }
+
+        function getGalleryMedia(metadata) {
+            const media = [];
+
+            if (metadata.cover) {
+                media.push(metadata.cover);
+            }
+
+            if (metadata.gallery) {
+                media.push(...metadata.gallery.split(',').map((item) => item.trim()).filter(Boolean));
+            }
+
+            return [...new Set(media)];
+        }
+
+        function renderGallery(metadata, title) {
+            const mediaItems = getGalleryMedia(metadata);
+            let activeMediaIndex = 0;
+
+            if (!mediaItems.length) {
+                gallery.classList.add('hidden');
+                return;
+            }
+
+            function setActiveMedia(index) {
+                activeMediaIndex = (index + mediaItems.length) % mediaItems.length;
+                const activeMedia = mediaItems[activeMediaIndex];
+                const activeMediaIsVideo = isVideoUrl(activeMedia);
+
+                galleryMainVideo.pause();
+                galleryFullscreenTrigger.classList.toggle('hidden', activeMediaIsVideo);
+                galleryMainVideo.classList.toggle('hidden', !activeMediaIsVideo);
+
+                if (activeMediaIsVideo) {
+                    galleryMainVideo.src = activeMedia;
+                    galleryMainVideo.setAttribute('aria-label', `${title} gallery video ${activeMediaIndex + 1}`);
+                    galleryMainImage.removeAttribute('src');
+                    fullscreenImage.removeAttribute('src');
+                } else {
+                    galleryMainImage.src = activeMedia;
+                    galleryMainImage.alt = `${title} gallery image ${activeMediaIndex + 1}`;
+                    fullscreenImage.src = activeMedia;
+                    fullscreenImage.alt = `${title} gallery image ${activeMediaIndex + 1}`;
+                    galleryMainVideo.removeAttribute('src');
+                    galleryMainVideo.load();
+                }
+
+                Array.from(galleryThumbnails.children).forEach((thumbnail, thumbnailIndex) => {
+                    const isActive = thumbnailIndex === activeMediaIndex;
+                    thumbnail.setAttribute('aria-current', isActive ? 'true' : 'false');
+
+                    if (isActive) {
+                        thumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                    }
+                });
+            }
+
+            galleryThumbnails.innerHTML = '';
+            galleryPrev.classList.toggle('hidden', mediaItems.length <= 1);
+            galleryNext.classList.toggle('hidden', mediaItems.length <= 1);
+            galleryPrev.onclick = (event) => {
+                setActiveMedia(activeMediaIndex - 1);
+                event.currentTarget.blur();
+            };
+            galleryNext.onclick = (event) => {
+                setActiveMedia(activeMediaIndex + 1);
+                event.currentTarget.blur();
+            };
+            galleryFullscreenTrigger.onclick = () => openFullscreenImage(fullscreenImage.src, fullscreenImage.alt);
+
+            mediaItems.forEach((mediaItem, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'gallery-thumbnail relative shrink-0 w-28 md:w-36 aspect-video rounded-lg overflow-hidden border border-white/10 opacity-60 hover:opacity-100 hover:border-white/50 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30';
+                button.setAttribute('aria-label', `Show ${title} gallery item ${index + 1}`);
+
+                if (isVideoUrl(mediaItem)) {
+                    const thumbnail = document.createElement('video');
+                    thumbnail.src = mediaItem;
+                    thumbnail.muted = true;
+                    thumbnail.preload = 'metadata';
+                    thumbnail.className = 'w-full h-full object-cover';
+
+                    const playIcon = document.createElement('span');
+                    playIcon.className = 'absolute inset-0 flex items-center justify-center text-white bg-black/20';
+                    playIcon.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>';
+
+                    button.appendChild(thumbnail);
+                    button.appendChild(playIcon);
+                } else {
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = mediaItem;
+                    thumbnail.alt = '';
+                    thumbnail.className = 'w-full h-full object-cover';
+                    thumbnail.draggable = false;
+
+                    button.appendChild(thumbnail);
+                }
+
+                button.addEventListener('click', (event) => {
+                    if (suppressThumbnailClick) {
+                        event.preventDefault();
+                        suppressThumbnailClick = false;
+                        return;
+                    }
+
+                    setActiveMedia(index);
+                    event.currentTarget.blur();
+                });
+                galleryThumbnails.appendChild(button);
+            });
+
+            setActiveMedia(0);
+            gallery.classList.remove('hidden');
+        }
+
+        function escapeHtml(value) {
+            return value
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function parseCarouselImages(content) {
+            return content
+                .split('\n')
+                .map((line) => line.trim())
+                .map((line) => line.match(/^!\[([^\]]*)\]\((\S+)(?:\s+["'][^"']*["'])?\)$/))
+                .filter(Boolean)
+                .map((match) => ({
+                    alt: match[1],
+                    src: match[2],
+                }));
+        }
+
+        function renderMarkdownCarousel(mediaItems) {
+            if (!mediaItems.length) {
+                return '';
+            }
+
+            if (mediaItems.length === 1) {
+                if (isVideoUrl(mediaItems[0].src)) {
+                    return `<video class="markdown-carousel-video" controls playsinline preload="metadata" src="${escapeHtml(mediaItems[0].src)}" aria-label="${escapeHtml(mediaItems[0].alt || 'Embedded video')}"></video>`;
+                }
+
+                return `![${mediaItems[0].alt}](${mediaItems[0].src})`;
+            }
+
+            const firstItem = mediaItems[0];
+            const firstItemIsVideo = isVideoUrl(firstItem.src);
+            const dots = mediaItems.map((item, index) => {
+                const mediaType = isVideoUrl(item.src) ? 'video' : 'image';
+                return `<button type="button" class="markdown-carousel-dot" aria-label="Show carousel ${mediaType} ${index + 1}" aria-current="${index === 0 ? 'true' : 'false'}" data-src="${escapeHtml(item.src)}" data-alt="${escapeHtml(item.alt)}" data-media-type="${mediaType}"></button>`;
+            }).join('');
+
+            return `
+<div class="markdown-carousel">
+    <div class="markdown-carousel-frame">
+        <img class="markdown-carousel-media markdown-carousel-image ${firstItemIsVideo ? 'hidden' : ''}" src="${firstItemIsVideo ? '' : escapeHtml(firstItem.src)}" alt="${firstItemIsVideo ? '' : escapeHtml(firstItem.alt)}" draggable="false">
+        <video class="markdown-carousel-media markdown-carousel-video ${firstItemIsVideo ? '' : 'hidden'}" controls playsinline preload="metadata" src="${firstItemIsVideo ? escapeHtml(firstItem.src) : ''}" aria-label="${firstItemIsVideo ? escapeHtml(firstItem.alt || 'Carousel video') : ''}"></video>
+        <button type="button" class="markdown-carousel-button markdown-carousel-prev" aria-label="Previous carousel item">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <button type="button" class="markdown-carousel-button markdown-carousel-next" aria-label="Next carousel item">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+    </div>
+    <div class="markdown-carousel-dots">${dots}</div>
+</div>`;
+        }
+
+        function preprocessMarkdownCarousels(markdown) {
+            return markdown.replace(/:::carousel\s*\n([\s\S]*?)\n:::/g, (match, content) => (
+                renderMarkdownCarousel(parseCarouselImages(content))
+            ));
+        }
+
+        function sanitizeMarkdownBodyHtml(html) {
+            return DOMPurify.sanitize(html, {
+                ADD_TAGS: ['video', 'source'],
+                ADD_ATTR: ['playsinline', 'controls', 'preload', 'muted', 'poster', 'disablepictureinpicture', 'controlslist'],
+            });
+        }
+
+        function initializeMarkdownCarousels() {
+            markdownContent.querySelectorAll('.markdown-carousel').forEach((carousel) => {
+                const image = carousel.querySelector('.markdown-carousel-image');
+                const video = carousel.querySelector('.markdown-carousel-video');
+                const previousButton = carousel.querySelector('.markdown-carousel-prev');
+                const nextButton = carousel.querySelector('.markdown-carousel-next');
+                const dots = Array.from(carousel.querySelectorAll('.markdown-carousel-dot'));
+                let activeIndex = 0;
+
+                if (!image || !video || !previousButton || !nextButton || dots.length < 2) {
+                    return;
+                }
+
+                function setActiveMedia(index) {
+                    activeIndex = (index + dots.length) % dots.length;
+                    const activeDot = dots[activeIndex];
+                    const mediaType = activeDot.dataset.mediaType || (isVideoUrl(activeDot.dataset.src) ? 'video' : 'image');
+
+                    if (mediaType === 'video') {
+                        image.classList.add('hidden');
+                        video.classList.remove('hidden');
+                        video.src = activeDot.dataset.src;
+                        video.setAttribute('aria-label', activeDot.dataset.alt || 'Carousel video');
+                    } else {
+                        video.pause();
+                        video.classList.add('hidden');
+                        image.classList.remove('hidden');
+                        image.src = activeDot.dataset.src;
+                        image.alt = activeDot.dataset.alt || '';
+                    }
+
+                    dots.forEach((dot, dotIndex) => {
+                        dot.setAttribute('aria-current', dotIndex === activeIndex ? 'true' : 'false');
+                    });
+                }
+
+                previousButton.addEventListener('click', (event) => {
+                    setActiveMedia(activeIndex - 1);
+                    event.currentTarget.blur();
+                });
+                nextButton.addEventListener('click', (event) => {
+                    setActiveMedia(activeIndex + 1);
+                    event.currentTarget.blur();
+                });
+
+                dots.forEach((dot, dotIndex) => {
+                    dot.addEventListener('click', (event) => {
+                        setActiveMedia(dotIndex);
+                        event.currentTarget.blur();
+                    });
+                });
+            });
+        }
+
+        function initializeMarkdownFullscreenImages() {
+            markdownContent.addEventListener('click', (event) => {
+                if (event.target.closest('.markdown-carousel-button, .markdown-carousel-dot')) {
+                    return;
+                }
+
+                const image = event.target.closest('img');
+
+                if (!image || !markdownContent.contains(image)) {
+                    return;
+                }
+
+                openFullscreenImage(image.currentSrc || image.src, image.alt);
+            });
+        }
+
+        async function loadGamePage() {
+            if (!slug || !allowedSlugPattern.test(slug)) {
+                showError('Choose a project from the Selected Works grid to view its game page.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`games/${slug}.md`);
+
+                if (!response.ok) {
+                    throw new Error(`Missing markdown file for ${slug}.`);
+                }
+
+                const source = await response.text();
+                const { metadata, body } = parseMarkdownFile(source);
+                const title = metadata.title || slug.replaceAll('-', ' ');
+
+                document.title = `${title} | Kacper Malek`;
+                pageTitle.textContent = title;
+                renderMeta(metadata);
+                renderGallery(metadata, title);
+
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                });
+
+                markdownContent.innerHTML = sanitizeMarkdownBodyHtml(marked.parse(preprocessMarkdownCarousels(body)));
+                initializeMarkdownCarousels();
+                loadingState.classList.add('hidden');
+                gamePage.classList.remove('hidden');
+                lucide.createIcons();
+            } catch (error) {
+                showError('This project page could not be loaded. Check that the matching markdown file exists in the games folder.');
+            }
+        }
+
+        initializeMarkdownFullscreenImages();
+        loadGamePage();
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "overtime",
+    "title": "Overtime",
+    "year": "2026",
+    "cover": "assets/games/overtime/overtime1.gif",
+    "summary": "A game project called Overtime. Replace this summary with your final project description.",
+    "tags": ["Game", "In Development"],
+    "icon": "play"
+  },
+  {
+    "slug": "example-game",
+    "title": "Example Game",
+    "year": "2026",
+    "cover": "assets/games/example-game/sample-2.jpg",
+    "summary": "A placeholder game entry you can use as a template for future projects.",
+    "tags": ["Example", "Template"],
+    "icon": "play"
+  }
+]
